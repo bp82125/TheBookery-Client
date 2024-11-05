@@ -12,17 +12,19 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { ChevronsUpDown } from 'lucide-vue-next'
-import { usePublisherStore } from '@/stores/usePublisherStore'
+import { useReaderStore } from '@/stores/useReaderStore'
 import { watch } from 'vue'
 
-const field = ref('TenNXB')
+const field = ref('Ten')
 const searchTerm = ref('')
-const publisherStore = usePublisherStore()
+const readerStore = useReaderStore()
 
 const fields = [
-  { value: 'MaNXB', label: 'Mã NXB' },
-  { value: 'TenNXB', label: 'Tên NXB' },
-  { value: 'DiaChi', label: 'Địa chỉ' }
+  { value: 'HoLot', label: 'Họ lót' },
+  { value: 'Ten', label: 'Tên' },
+  { value: 'DiaChi', label: 'Địa chỉ' },
+  { value: 'DienThoai', label: 'Số điện thoại' },
+  { value: 'TaiKhoan.TenDangNhap', label: 'Tên đăng nhập' }
 ]
 
 const getFieldLabel = (value) => {
@@ -41,8 +43,8 @@ const debounce = (func, delay) => {
 }
 
 const fetchWithDebounce = debounce(async () => {
-  publisherStore.setSearchParams(field.value, searchTerm.value)
-  await publisherStore.fetchPublishers()
+  readerStore.setSearchParams(field.value, searchTerm.value)
+  await readerStore.fetchReaders()
 }, 300)
 
 watch(searchTerm, () => {

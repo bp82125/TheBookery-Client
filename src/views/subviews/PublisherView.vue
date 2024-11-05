@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import PublisherLayout from '@/components/subviews/publisher/PublisherLayout.vue'
 </script>
 

@@ -6,7 +6,7 @@ import { RouterView } from 'vue-router'
 <template>
   <div class="flex h-screen">
     <SidebarLayout></SidebarLayout>
-    <main class="flex-1 p-2 bg-slate-100">
+    <main class="flex-1 p-2 bg-slate-100 overflow-auto">
       <RouterView></RouterView>
     </main>
   </div>

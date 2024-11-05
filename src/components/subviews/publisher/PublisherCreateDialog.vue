@@ -1,7 +1,7 @@
 <template>
   <Dialog v-model:open="dialogOpen">
     <DialogTrigger as-child>
-      <Button class="inline-flex items-center">
+      <Button class="inline-flex items-center bg-blue-600 hover:bg-blue-500">
         <Plus class="size-4 mr-2"></Plus> <span> Thêm nhà xuất bản </span>
       </Button>
     </DialogTrigger>
@@ -71,6 +71,9 @@ import { Input } from '@/components/ui/input'
 import { Plus } from 'lucide-vue-next'
 
 import { ref } from 'vue'
+import { usePublisherStore } from '@/stores/usePublisherStore'
+
+const publisherStore = usePublisherStore()
 
 const formSchema = toTypedSchema(
   z.object({
@@ -85,8 +88,9 @@ const formSchema = toTypedSchema(
   })
 )
 
-const onSubmit = (values) => {
-  console.log('Form submitted!', values)
+const onSubmit = async (values) => {
+  await publisherStore.createPublisher(values)
+  closeDialog()
 }
 
 const dialogOpen = ref(false)
@@ -95,5 +99,5 @@ const closeDialog = () => {
   dialogOpen.value = false
 }
 
-const initialValue = ref('AAAAAAAAAAAAAAAAAA')
+const initialValue = ref('')
 </script>

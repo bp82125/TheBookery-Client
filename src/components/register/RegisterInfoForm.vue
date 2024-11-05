@@ -82,6 +82,7 @@ const selectedDate = ref(today(getLocalTimeZone()))
 const placeholderDate = ref(today(getLocalTimeZone()))
 
 const onDateChange = (date) => {
+  console.log(date)
   selectedDate.value = date
   registrationStore.updateBasicInfo({ dob: date }) // Update the DOB in the store
 }

@@ -1,3 +1,7 @@
 <template>
-  <h1>Reader</h1>
+  <ReaderLayout></ReaderLayout>
 </template>
+
+<script setup>
+import ReaderLayout from '@/components/subviews/reader/ReaderLayout.vue'
+</script>

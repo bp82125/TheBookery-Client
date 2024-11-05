@@ -9,6 +9,7 @@
       <PublisherCreateDialog />
     </div>
     <PublisherTable @edit="openUpdateDialog" @delete="openDeleteDialog" />
+    <PublisherPagination></PublisherPagination>
     <PublisherUpdateDialog ref="updateDialog" />
     <PublisherDeleteDialog ref="deleteDialog"></PublisherDeleteDialog>
   </div>
@@ -17,6 +18,7 @@
 <script setup>
 import PublisherHeader from './PublisherHeader.vue'
 import PublisherTable from './PublisherTable.vue'
+import PublisherPagination from './PublisherPagination.vue'
 import PublisherCreateDialog from './PublisherCreateDialog.vue'
 import PublisherUpdateDialog from './PublisherUpdateDialog.vue'
 import PublisherDeleteDialog from './PublisherDeleteDialog.vue'

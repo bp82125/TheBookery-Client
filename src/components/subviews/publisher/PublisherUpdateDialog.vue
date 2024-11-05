@@ -59,6 +59,9 @@ import {
   DialogTitle
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { usePublisherStore } from '@/stores/usePublisherStore'
+
+const publisherStore = usePublisherStore()
 
 const formSchema = toTypedSchema(
   z.object({
@@ -88,9 +91,9 @@ const openDialog = (publisher) => {
   dialogOpen.value = true
 }
 
-const onSubmit = (values) => {
-  console.log('Form submitted!', formId.value, values)
-  dialogOpen.value = false
+const onSubmit = async (values) => {
+  await publisherStore.updatePublisher(formId.value, values)
+  closeDialog()
 }
 
 const closeDialog = () => {

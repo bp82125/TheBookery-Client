@@ -1,11 +1,11 @@
-// stores/usePublisherStore.js
+// stores/useReaderStore.js
 import { defineStore } from 'pinia'
 import axiosInstance from '@/plugins/axios'
 
-export const usePublisherStore = defineStore('publisher', {
+export const useReaderStore = defineStore('reader', {
   state: () => ({
-    publishers: [],
-    publisher: null,
+    readers: [],
+    reader: null,
     loading: false,
     error: null,
 
@@ -23,7 +23,7 @@ export const usePublisherStore = defineStore('publisher', {
   }),
 
   actions: {
-    async fetchPublishers() {
+    async fetchReaders() {
       this.loading = true
       try {
         const params = {
@@ -32,21 +32,22 @@ export const usePublisherStore = defineStore('publisher', {
           ...this.paginationParams
         }
 
-        const response = await axiosInstance.get('/nha-xuat-ban', { params })
-        this.publishers = response.data.data.nhaXuatBans
+        const response = await axiosInstance.get('/doc-gia', { params })
+        this.readers = response.data.data.docGias
         this.pagination = response.data.data.pagination
       } catch (error) {
         this.error = error
+        console.log(error)
       } finally {
         this.loading = false
       }
     },
 
-    async fetchPublisherById(id) {
+    async fetchReaderById(id) {
       this.loading = true
       try {
-        const response = await axiosInstance.get(`/nha-xuat-ban/${id}`)
-        this.publisher = response.data
+        const response = await axiosInstance.get(`/doc-gia/${id}`)
+        this.reader = response.data
       } catch (error) {
         this.error = error
       } finally {
@@ -54,11 +55,11 @@ export const usePublisherStore = defineStore('publisher', {
       }
     },
 
-    async createPublisher(publisher) {
+    async createReader(reader) {
       this.loading = true
       try {
-        await axiosInstance.post('/nha-xuat-ban', publisher)
-        await this.fetchPublishers()
+        await axiosInstance.post('/doc-gia', reader)
+        await this.fetchReaders()
       } catch (error) {
         this.error = error
       } finally {
@@ -66,11 +67,11 @@ export const usePublisherStore = defineStore('publisher', {
       }
     },
 
-    async updatePublisher(id, updatedPublisher) {
+    async updateReader(id, updatedReader) {
       this.loading = true
       try {
-        await axiosInstance.put(`/nha-xuat-ban/${id}`, updatedPublisher)
-        await this.fetchPublishers()
+        await axiosInstance.put(`/doc-gia/${id}`, updatedReader)
+        await this.fetchReaders()
       } catch (error) {
         this.error = error
       } finally {
@@ -78,11 +79,11 @@ export const usePublisherStore = defineStore('publisher', {
       }
     },
 
-    async deletePublisher(id) {
+    async deleteReader(id) {
       this.loading = true
       try {
-        await axiosInstance.delete(`/nha-xuat-ban/${id}`)
-        await this.fetchPublishers()
+        await axiosInstance.delete(`/doc-gia/${id}`)
+        await this.fetchReaders()
       } catch (error) {
         this.error = error
       } finally {

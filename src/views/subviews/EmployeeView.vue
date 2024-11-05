@@ -1,3 +1,7 @@
+<script setup>
+import EmployeeLayout from '@/components/subviews/employee/EmployeeLayout.vue'
+</script>
+
 <template>
-  <h1>Employee</h1>
+  <EmployeeLayout></EmployeeLayout>
 </template>

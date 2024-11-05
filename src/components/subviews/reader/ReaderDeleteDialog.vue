@@ -1,15 +1,15 @@
 <template>
   <Dialog v-model:open="dialogOpen">
-    <DialogContent class="max-w-sm">
+    <DialogContent class="max-w-md">
       <DialogHeader>
-        <DialogTitle>Xóa nhà xuất bản</DialogTitle>
+        <DialogTitle>Xóa đọc giả</DialogTitle>
       </DialogHeader>
       <div class="flex justify-center">
         <CircleAlert class="size-20 text-gray-300"></CircleAlert>
       </div>
 
       <DialogDescription class="mb-3">
-        Bạn có chắc là muốn xóa <b>{{ TenNXB }}</b> không? Hành động này không thể hoàn tác.
+        Bạn có chắc là muốn xóa đọc giả <b>{{ HoTen }}</b> không? Hành động này không thể hoàn tác.
       </DialogDescription>
       <DialogFooter class="w-full">
         <Button variant="outline" @click="closeDialog" class="w-full">Hủy</Button>
@@ -32,17 +32,17 @@ import { Button } from '@/components/ui/button'
 import { CircleAlert } from 'lucide-vue-next'
 
 import { ref } from 'vue'
-import { usePublisherStore } from '@/stores/usePublisherStore'
+import { useReaderStore } from '@/stores/useReaderStore'
 
-const publisherStore = usePublisherStore()
+const readerStore = useReaderStore()
 const dialogOpen = ref(false)
 
 const id = ref('')
-const TenNXB = ref('')
+const HoTen = ref('')
 
-const openDialog = (publisher) => {
-  id.value = publisher.MaNXB
-  TenNXB.value = publisher.TenNXB
+const openDialog = (reader) => {
+  id.value = reader.MaDocGia
+  HoTen.value = reader.HoLot + ' ' + reader.Ten
   dialogOpen.value = true
 }
 
@@ -51,7 +51,7 @@ const closeDialog = () => {
 }
 
 const handleDelete = () => {
-  publisherStore.deletePublisher(id.value)
+  readerStore.deleteReader(id.value)
   closeDialog()
 }
 
