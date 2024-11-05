@@ -2,7 +2,7 @@
   <div class="px-4">
     <div class="flex justify-end">
       <span
-        >Trên tổng số <b>{{ total_records }}</b> độc giả</span
+        >Trên tổng số <b>{{ total_records }}</b> nhân viên</span
       >
     </div>
     <div class="flex items-center justify-between mt-8">
@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import { useReaderStore } from '@/stores/useReaderStore'
+import { useEmployeeStore } from '@/stores/useEmployeeStore'
 import { Button } from '@/components/ui/button'
 import {
   Pagination,
@@ -83,25 +83,25 @@ import { ChevronsUpDown } from 'lucide-vue-next'
 
 import { ref, watch, computed } from 'vue'
 
-const readerStore = useReaderStore()
+const employeeStore = useEmployeeStore()
 
 const limitOptions = [5, 10, 20, 50, 100]
-const limit = ref(readerStore.paginationParams.limit.toString())
+const limit = ref(employeeStore.paginationParams.limit.toString())
 
 const currentPage = ref()
 
 const total_pages = computed(() => {
-  return readerStore.pagination.total_pages * limit.value
+  return employeeStore.pagination.total_pages * limit.value
 })
 
 const total_records = computed(() => {
-  return readerStore.pagination.total_records
+  return employeeStore.pagination.total_records
 })
 
 async function onPageChange(newPage) {
   console.log(newPage)
-  readerStore.setPaginationParams(newPage, Number(limit.value))
-  await readerStore.fetchReaders()
+  employeeStore.setPaginationParams(newPage, Number(limit.value))
+  await employeeStore.fetchEmployees()
 }
 
 function getLimitLabel(limit) {
@@ -109,7 +109,7 @@ function getLimitLabel(limit) {
 }
 
 watch(limit, async (newLimit) => {
-  readerStore.setPaginationParams(1, Number(newLimit))
-  await readerStore.fetchReaders()
+  employeeStore.setPaginationParams(1, Number(newLimit))
+  await employeeStore.fetchEmployees()
 })
 </script>
