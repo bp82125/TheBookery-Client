@@ -33,6 +33,9 @@ import { CircleAlert } from 'lucide-vue-next'
 
 import { ref } from 'vue'
 import { usePublisherStore } from '@/stores/usePublisherStore'
+import { useToast } from '@/components/ui/toast'
+
+const { toast } = useToast()
 
 const publisherStore = usePublisherStore()
 const dialogOpen = ref(false)
@@ -52,6 +55,10 @@ const closeDialog = () => {
 
 const handleDelete = () => {
   publisherStore.deletePublisher(id.value)
+  toast({
+    title: 'Xóa nhà xuất bản',
+    description: `${TenNXB.value} đã được xóa thành công`
+  })
   closeDialog()
 }
 

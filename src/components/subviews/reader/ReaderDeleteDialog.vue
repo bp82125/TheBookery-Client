@@ -33,6 +33,9 @@ import { CircleAlert } from 'lucide-vue-next'
 
 import { ref } from 'vue'
 import { useReaderStore } from '@/stores/useReaderStore'
+import { useToast } from '@/components/ui/toast'
+
+const { toast } = useToast()
 
 const readerStore = useReaderStore()
 const dialogOpen = ref(false)
@@ -52,6 +55,10 @@ const closeDialog = () => {
 
 const handleDelete = () => {
   readerStore.deleteReader(id.value)
+  toast({
+    title: 'Xóa đọc giả',
+    description: `Đọc giả ${HoTen.value} đã được xóa thành công`
+  })
   closeDialog()
 }
 

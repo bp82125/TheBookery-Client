@@ -35,7 +35,7 @@ export const useAccountStore = defineStore('account', {
 
         const response = await axiosInstance.get('/tai-khoan', { params })
         const data = response.data.data
-        this.accounts = data.accounts
+        this.accounts = data.taiKhoans
         this.pagination = data.pagination
       } catch (error) {
         this.error = error.message || 'An error occurred while fetching accounts'
@@ -79,9 +79,35 @@ export const useAccountStore = defineStore('account', {
       this.error = null
       try {
         await axiosInstance.put(`/tai-khoan/${id}`, updatedAccount)
-        await this.fetchAccounts() // Refresh list after update
+        await this.fetchAccounts()
       } catch (error) {
         this.error = error.message || 'Failed to update account'
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async toggleAccount(id) {
+      this.loading = true
+      this.error = null
+      try {
+        await axiosInstance.patch(`/tai-khoan/${id}/toggle`)
+        await this.fetchAccounts()
+      } catch (error) {
+        this.error = error.message || 'Failed to toggle account'
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async resetPasswordAccount(id, newPassword) {
+      this.loading = true
+      this.error = null
+      try {
+        await axiosInstance.patch(`/tai-khoan/${id}/reset-password`, newPassword)
+        await this.fetchAccounts()
+      } catch (error) {
+        this.error = error.message || 'Failed to reset account password'
       } finally {
         this.loading = false
       }
@@ -92,7 +118,7 @@ export const useAccountStore = defineStore('account', {
       this.error = null
       try {
         await axiosInstance.delete(`/tai-khoan/${id}`)
-        await this.fetchAccounts() // Refresh list after deletion
+        await this.fetchAccounts()
       } catch (error) {
         this.error = error.message || 'Failed to delete account'
       } finally {
@@ -102,7 +128,7 @@ export const useAccountStore = defineStore('account', {
 
     setSearchParams(field, value) {
       if (value) {
-        this.searchParams[field] = value
+        this.searchParams = { [field]: value }
       } else {
         delete this.searchParams[field]
       }

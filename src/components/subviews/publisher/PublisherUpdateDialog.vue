@@ -60,8 +60,11 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { usePublisherStore } from '@/stores/usePublisherStore'
+import { useToast } from '@/components/ui/toast'
 
 const publisherStore = usePublisherStore()
+
+const { toast } = useToast()
 
 const formSchema = toTypedSchema(
   z.object({
@@ -93,6 +96,10 @@ const openDialog = (publisher) => {
 
 const onSubmit = async (values) => {
   await publisherStore.updatePublisher(formId.value, values)
+  toast({
+    title: 'Cập nhật nhà xuất bản',
+    description: `${values.TenNXB} được cập nhật thành công`
+  })
   closeDialog()
 }
 

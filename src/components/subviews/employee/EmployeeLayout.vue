@@ -29,11 +29,11 @@ import { ref } from 'vue'
 const updateDialog = ref(null)
 const deleteDialog = ref(null)
 
-const openUpdateDialog = (reader) => {
-  updateDialog.value.openDialog(reader)
+const openUpdateDialog = (employee) => {
+  updateDialog.value.openDialog(employee)
 }
 
-const openDeleteDialog = (reader) => {
-  deleteDialog.value.openDialog(reader)
+const openDeleteDialog = (employee) => {
+  deleteDialog.value.openDialog(employee)
 }
 </script>

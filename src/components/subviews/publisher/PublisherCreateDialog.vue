@@ -72,6 +72,9 @@ import { Plus } from 'lucide-vue-next'
 
 import { ref } from 'vue'
 import { usePublisherStore } from '@/stores/usePublisherStore'
+import { useToast } from '@/components/ui/toast'
+
+const { toast } = useToast()
 
 const publisherStore = usePublisherStore()
 
@@ -90,6 +93,10 @@ const formSchema = toTypedSchema(
 
 const onSubmit = async (values) => {
   await publisherStore.createPublisher(values)
+  toast({
+    title: 'Thêm nhà xuất bản',
+    description: `${values.TenNXB} được thêm thành công`
+  })
   closeDialog()
 }
 

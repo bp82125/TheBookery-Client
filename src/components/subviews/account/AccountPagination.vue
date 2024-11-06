@@ -2,7 +2,7 @@
   <div class="px-4">
     <div class="flex justify-end">
       <span
-        >Trên tổng số <b>{{ total_records }}</b> nhân viên</span
+        >Trên tổng số <b>{{ total_records }}</b> tài khoản</span
       >
     </div>
     <div class="flex items-center justify-between mt-8">
@@ -59,7 +59,6 @@
 </template>
 
 <script setup>
-import { useEmployeeStore } from '@/stores/useEmployeeStore'
 import { Button } from '@/components/ui/button'
 import {
   Pagination,
@@ -82,25 +81,26 @@ import {
 import { ChevronsUpDown } from 'lucide-vue-next'
 
 import { ref, watch, computed } from 'vue'
+import { useAccountStore } from '@/stores/useAccountStore'
 
-const employeeStore = useEmployeeStore()
+const accountStore = useAccountStore()
 
 const limitOptions = [5, 10, 20, 50, 100]
-const limit = ref(employeeStore.paginationParams.limit.toString())
+const limit = ref(accountStore.paginationParams.limit.toString())
 
 const currentPage = ref()
 
 const total_pages = computed(() => {
-  return employeeStore.pagination.total_pages * limit.value
+  return accountStore.pagination.total_pages * limit.value
 })
 
 const total_records = computed(() => {
-  return employeeStore.pagination.total_records
+  return accountStore.pagination.total_records
 })
 
 async function onPageChange(newPage) {
-  employeeStore.setPaginationParams(newPage, Number(limit.value))
-  await employeeStore.fetchEmployees()
+  accountStore.setPaginationParams(newPage, Number(limit.value))
+  await accountStore.fetchAccounts()
 }
 
 function getLimitLabel(limit) {
@@ -108,7 +108,7 @@ function getLimitLabel(limit) {
 }
 
 watch(limit, async (newLimit) => {
-  employeeStore.setPaginationParams(1, Number(newLimit))
-  await employeeStore.fetchEmployees()
+  accountStore.setPaginationParams(1, Number(newLimit))
+  await accountStore.fetchAccounts()
 })
 </script>

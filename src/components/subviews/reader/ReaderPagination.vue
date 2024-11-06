@@ -99,7 +99,6 @@ const total_records = computed(() => {
 })
 
 async function onPageChange(newPage) {
-  console.log(newPage)
   readerStore.setPaginationParams(newPage, Number(limit.value))
   await readerStore.fetchReaders()
 }

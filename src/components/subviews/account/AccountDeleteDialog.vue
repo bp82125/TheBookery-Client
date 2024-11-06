@@ -2,16 +2,18 @@
   <Dialog v-model:open="dialogOpen">
     <DialogContent class="max-w-md">
       <DialogHeader>
-        <DialogTitle>Xóa nhân viên</DialogTitle>
+        <DialogTitle>Xóa tài khoản</DialogTitle>
       </DialogHeader>
       <div class="flex justify-center">
         <CircleAlert class="size-20 text-gray-300"></CircleAlert>
       </div>
 
       <DialogDescription class="mb-3">
-        Bạn có chắc là muốn xóa nhân viên <b>{{ HoTenNV }}</b> không?
+        Bạn có chắc là muốn xóa tài khoản <b>{{ TenDangNhap }}</b> không? Điều này cũng sẽ tiến hành
+        xóa luôn người dùng <b>{{ HoTen }}</b
+        >.
       </DialogDescription>
-      <DialogDescription class="mb-3"> Hành động này không thể hoàn tác. </DialogDescription>
+      <DialogDescription class="mb-3"> Hành động này không thể hoàn tác! </DialogDescription>
       <DialogFooter class="w-full">
         <Button variant="outline" @click="closeDialog" class="w-full">Hủy</Button>
         <Button variant="destructive" @click="handleDelete" class="w-full">Xóa</Button>
@@ -33,20 +35,31 @@ import { Button } from '@/components/ui/button'
 import { CircleAlert } from 'lucide-vue-next'
 
 import { ref } from 'vue'
-import { useEmployeeStore } from '@/stores/useEmployeeStore'
+import { useAccountStore } from '@/stores/useAccountStore'
 import { useToast } from '@/components/ui/toast'
 
 const { toast } = useToast()
 
-const employeeStore = useEmployeeStore()
+const accountStore = useAccountStore()
 const dialogOpen = ref(false)
 
 const id = ref('')
-const HoTenNV = ref('')
+const HoTen = ref('')
+const TenDangNhap = ref('')
 
-const openDialog = (employee) => {
-  id.value = employee.MSNV
-  HoTenNV.value = employee.HoTenNV
+const getFullName = (account) => {
+  if (account.DocGia) {
+    return `${account.DocGia.HoLot} ${account.DocGia.Ten}`
+  } else if (account.NhanVien) {
+    return account.NhanVien.HoTenNV
+  }
+  return 'N/A'
+}
+
+const openDialog = (account) => {
+  id.value = account.MaTaiKhoan
+  TenDangNhap.value = account.TenDangNhap
+  HoTen.value = getFullName(account)
   dialogOpen.value = true
 }
 
@@ -55,10 +68,10 @@ const closeDialog = () => {
 }
 
 const handleDelete = () => {
-  employeeStore.deleteEmployee(id.value)
+  accountStore.deleteAccount(id.value)
   toast({
-    title: 'Xóa nhân viên',
-    description: `Nhân viên ${HoTenNV.value} đã được xóa thành công`
+    title: 'Xóa tài khoản',
+    description: `Tài khoản ${TenDangNhap.value} đã xóa thành công`
   })
   closeDialog()
 }

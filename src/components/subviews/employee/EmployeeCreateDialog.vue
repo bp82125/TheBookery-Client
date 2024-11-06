@@ -270,6 +270,9 @@ import * as z from 'zod'
 import { useEmployeeStore } from '@/stores/useEmployeeStore'
 
 import ComboboxWithCreate from './ComboboxWithCreate.vue'
+import { useToast } from '@/components/ui/toast'
+
+const { toast } = useToast()
 
 const formSchema = [
   z.object({
@@ -342,11 +345,18 @@ const onSubmit = async (inputValues) => {
       const employeeInfo = { ...basicInfo, MaTaiKhoan }
       console.log(employeeInfo)
       await employeeStore.createEmployee(employeeInfo)
+      toast({
+        title: 'Thêm nhân viên',
+        description: `Nhân viên ${employeeInfo.HoTenNV} được thêm thành công`
+      })
       stepIndex.value = 1
       closeDialog()
-      console.log('Employee created successfully.')
     } else {
-      console.error('Failed to retrieve account ID for employee creation.')
+      toast({
+        title: 'Lỗi',
+        variant: 'destructive',
+        description: `Đã xảy ra lỗi trong quá trình thêm nhân viên mới`
+      })
     }
   } catch (error) {
     console.error('An error occurred during account or employee creation:', error)

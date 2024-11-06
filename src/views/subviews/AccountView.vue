@@ -1,3 +1,7 @@
+<script setup>
+import AccountLayout from '@/components/subviews/account/AccountLayout.vue'
+</script>
+
 <template>
-  <h1>Account</h1>
+  <AccountLayout></AccountLayout>
 </template>

@@ -23,13 +23,11 @@
 
             <FormField v-slot="{ componentField }" name="Ten">
               <FormItem>
-                <FormItem>
-                  <FormLabel for="Ten">Tên</FormLabel>
-                  <FormControl>
-                    <Input id="Ten" placeholder="A" v-bind="componentField" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                <FormLabel for="Ten">Tên</FormLabel>
+                <FormControl>
+                  <Input id="Ten" placeholder="A" v-bind="componentField" />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             </FormField>
           </div>
@@ -142,6 +140,9 @@ import CalendarAdvanced from '@/components/register/CalendarAdvanced.vue'
 import { useReaderStore } from '@/stores/useReaderStore'
 
 import { CalendarDate, GregorianCalendar } from '@internationalized/date'
+import { useToast } from '@/components/ui/toast'
+
+const { toast } = useToast()
 
 const readerStore = useReaderStore()
 const dialogOpen = ref(false)
@@ -209,9 +210,12 @@ const onDateChange = (date) => {
 
 const onSubmit = async (values) => {
   values.NgaySinh = calendarDateToISOString(values.NgaySinh)
-
-  console.log(values)
   await readerStore.updateReader(formId.value, values)
+
+  toast({
+    title: 'Cập nhật đọc giả',
+    description: `Đọc giả ${values.HoLot + ' ' + values.Ten} được cập nhật thành công`
+  })
   closeDialog()
 }
 

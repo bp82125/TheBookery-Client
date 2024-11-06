@@ -321,6 +321,9 @@ import { useReaderStore } from '@/stores/useReaderStore'
 import { useAccountStore } from '@/stores/useAccountStore'
 
 import * as z from 'zod'
+import { useToast } from '@/components/ui/toast'
+
+const { toast } = useToast()
 
 const formSchema = [
   z.object({
@@ -413,13 +416,19 @@ const onSubmit = async (inputValues) => {
 
     if (MaTaiKhoan) {
       const readerInfo = { ...basicInfo, MaTaiKhoan }
-      console.log(readerInfo)
       await readerStore.createReader(readerInfo)
       stepIndex.value = 1
+      toast({
+        title: 'Thêm đọc giả',
+        description: `Đọc giả ${readerInfo.HoLot + ' ' + readerInfo.Ten} được thêm thành công`
+      })
       closeDialog()
-      console.log('Reader created successfully.')
     } else {
-      console.error('Failed to retrieve account ID for reader creation.')
+      toast({
+        title: 'Lỗi',
+        variant: 'destructive',
+        description: `Đã xảy ra lỗi trong quá trình thêm đọc giả mới`
+      })
     }
   } catch (error) {
     console.error('An error occurred during account or reader creation:', error)

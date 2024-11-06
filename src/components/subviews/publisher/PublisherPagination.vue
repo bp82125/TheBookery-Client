@@ -98,7 +98,6 @@ const total_records = computed(() => {
 })
 
 async function onPageChange(newPage) {
-  console.log(newPage)
   publisherStore.setPaginationParams(newPage, Number(limit.value))
   await publisherStore.fetchPublishers()
 }

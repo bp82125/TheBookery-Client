@@ -25,37 +25,31 @@
           <div class="grid grid-cols-2 gap-4">
             <FormField v-slot="{ componentField }" name="ChucVu">
               <FormItem>
-                <FormItem>
-                  <FormLabel for="ChucVu">Chức vụ</FormLabel>
-                  <FormControl>
-                    <ComboboxWithCreate id="ChucVu" v-bind="componentField"></ComboboxWithCreate>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                <FormLabel for="ChucVu">Chức vụ</FormLabel>
+                <FormControl>
+                  <ComboboxWithCreate id="ChucVu" v-bind="componentField"></ComboboxWithCreate>
+                </FormControl>
+                <FormMessage />
               </FormItem>
             </FormField>
             <FormField v-slot="{ componentField }" name="SoDienThoai">
               <FormItem>
-                <FormItem>
-                  <FormLabel for="SoDienThoai">Số điện thoại</FormLabel>
-                  <FormControl>
-                    <Input id="SoDienThoai" placeholder="0123456789" v-bind="componentField" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                <FormLabel for="SoDienThoai">Số điện thoại</FormLabel>
+                <FormControl>
+                  <Input id="SoDienThoai" placeholder="0123456789" v-bind="componentField" />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             </FormField>
           </div>
           <div class="grid grid-cols-1 gap-4">
             <FormField v-slot="{ componentField }" name="DiaChi">
               <FormItem>
-                <FormItem>
-                  <FormLabel for="DiaChi">Địa chỉ</FormLabel>
-                  <FormControl>
-                    <Input id="DiaChi" placeholder="432A Đường 30/4" v-bind="componentField" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+                <FormLabel for="DiaChi">Địa chỉ</FormLabel>
+                <FormControl>
+                  <Input id="DiaChi" placeholder="432A Đường 30/4" v-bind="componentField" />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             </FormField>
           </div>
@@ -93,6 +87,9 @@ import {
 
 import { useEmployeeStore } from '@/stores/useEmployeeStore'
 import ComboboxWithCreate from './ComboboxWithCreate.vue'
+import { useToast } from '@/components/ui/toast'
+
+const { toast } = useToast()
 
 const employeeStore = useEmployeeStore()
 
@@ -131,6 +128,10 @@ const openDialog = (employee) => {
 
 const onSubmit = async (values) => {
   await employeeStore.updateEmployee(formId.value, values)
+  toast({
+    title: 'Cập nhật thông tin nhân viên',
+    description: `Thông tin của nhân viên ${values.HoTenNV} đã được cập nhật thành công`
+  })
   closeDialog()
 }
 
