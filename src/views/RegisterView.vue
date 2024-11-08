@@ -3,5 +3,7 @@ import RegisterLayout from '@/components/register/RegisterLayout.vue'
 </script>
 
 <template>
-  <RegisterLayout></RegisterLayout>
+  <div class="bg-[url('/background.jpg')]">
+    <RegisterLayout></RegisterLayout>
+  </div>
 </template>

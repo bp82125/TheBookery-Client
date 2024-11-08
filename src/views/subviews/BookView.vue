@@ -1,3 +1,7 @@
+<script setup>
+import BookLayout from '@/components/subviews/book/BookLayout.vue'
+</script>
+
 <template>
-  <h1>Book View</h1>
+  <BookLayout></BookLayout>
 </template>
