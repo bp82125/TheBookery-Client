@@ -1,6 +1,6 @@
 <template>
   <Card class="w-full max-w-sm overflow-hidden shadow-lg flex flex-col h-full">
-    <div class="aspect-square relative">
+    <div class="aspect-square overflow-hidden relative">
       <img
         :src="book.HinhAnh || `https://picsum.photos/800`"
         :alt="book.TenSach"
@@ -8,7 +8,7 @@
       />
     </div>
     <CardHeader>
-      <CardTitle class="line-clamp-1">{{ book.TenSach }}</CardTitle>
+      <CardTitle class="line-clamp-2 text-xl">{{ book.TenSach }}</CardTitle>
       <CardDescription>Phát hành năm {{ book.NamXuatBan }}</CardDescription>
     </CardHeader>
     <div class="flex-grow">
@@ -60,12 +60,10 @@ const props = defineProps({
 const emit = defineEmits(['edit', 'delete'])
 
 const handleEdit = (book) => {
-  console.log(book)
   emit('edit', book)
 }
 
 const handleDelete = (book) => {
-  console.log(book)
   emit('delete', book)
 }
 </script>

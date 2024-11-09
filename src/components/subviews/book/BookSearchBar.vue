@@ -15,7 +15,7 @@ import { ChevronsUpDown } from 'lucide-vue-next'
 import { watch } from 'vue'
 import { useBookStore } from '@/stores/useBookStore'
 
-const field = ref('HoTenNV')
+const field = ref('TenSach')
 const searchTerm = ref('')
 const bookStore = useBookStore()
 

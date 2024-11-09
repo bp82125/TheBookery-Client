@@ -1,8 +1,8 @@
 <template>
-  <div class="px-4 mt-3">
+  <div class="px-4">
     <div class="flex justify-end">
       <span
-        >Trên tổng số <b>{{ total_records }}</b> sách</span
+        >Trên tổng số <b>{{ total_records }}</b> đơn mượn {{ getStateLabels }}</span
       >
     </div>
     <div class="flex items-center justify-between mt-8">
@@ -81,34 +81,46 @@ import {
 import { ChevronsUpDown } from 'lucide-vue-next'
 
 import { ref, watch, computed } from 'vue'
-import { useBookStore } from '@/stores/useBookStore'
+import { useTrackingBookStore } from '@/stores/useTrackingBookStore'
 
-const bookStore = useBookStore()
+const trackingBookStore = useTrackingBookStore()
 
-const limitOptions = [10, 20, 50, 100]
-const limit = ref(bookStore.paginationParams.limit.toString())
+const limitOptions = [5, 10, 20, 50, 100]
+const limit = ref(trackingBookStore.paginationParams.limit.toString())
 
 const currentPage = ref()
 
 const total_pages = computed(() => {
-  return bookStore.pagination.total_pages * limit.value
+  return trackingBookStore.pagination.total_pages * limit.value
 })
 
 const total_records = computed(() => {
-  return bookStore.pagination.total_records
+  return trackingBookStore.pagination.total_records
 })
 
 async function onPageChange(newPage) {
-  bookStore.setPaginationParams(newPage, Number(limit.value))
-  await bookStore.fetchBooks()
+  trackingBookStore.setPaginationParams(newPage, Number(limit.value))
+  await trackingBookStore.fetchTrackingBooks()
 }
 
 function getLimitLabel(limit) {
   return `Giới hạn: ${limit}`
 }
 
+const stateLabels = {
+  PENDING: 'đang chờ duyệt',
+  APPROVED: 'đã xác nhận',
+  PICKED_UP: 'đã lấy sách',
+  RETURNED: 'đã trả sách',
+  REJECTED: 'bị từ chối'
+}
+
+const getStateLabels = computed(() => {
+  return stateLabels[trackingBookStore.getCurrentState()] || ''
+})
+
 watch(limit, async (newLimit) => {
-  bookStore.setPaginationParams(1, Number(newLimit))
-  await bookStore.fetchBooks()
+  trackingBookStore.setPaginationParams(1, Number(newLimit))
+  await trackingBookStore.fetchTrackingBooks()
 })
 </script>

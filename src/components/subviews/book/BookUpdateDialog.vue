@@ -1,19 +1,10 @@
 <template>
   <Dialog v-model:open="dialogOpen" @update:open="handleDialogUpdate">
-    <DialogTrigger as-child>
-      <Button
-        class="inline-flex items-center bg-blue-600 hover:bg-blue-500"
-        @click="dialogOpen = true"
-      >
-        <Plus class="size-4 mr-2"></Plus>
-        <span>Thêm sách mới</span>
-      </Button>
-    </DialogTrigger>
     <DialogContent class="sm:max-w-lg">
       <DialogHeader>
-        <DialogTitle>Thêm sách mới</DialogTitle>
+        <DialogTitle>Cập nhật sách</DialogTitle>
         <DialogDescription>
-          Điền các thông tin cần thiết vào form bên dưới, sau đó ấn nút để thêm sách.
+          Điền các thông tin cần thiết vào form bên dưới, sau đó ấn nút để tiến hành lưu.
         </DialogDescription>
       </DialogHeader>
       <Form
@@ -195,7 +186,7 @@
 
         <div class="flex flex-row w-full space-x-2 mt-6">
           <Button type="submit" class="w-full" :disabled="isSubmitting">
-            {{ isSubmitting ? 'Đang xử lý...' : 'Thêm' }}
+            {{ isSubmitting ? 'Đang xử lý...' : 'Cập nhật' }}
           </Button>
           <Button variant="outline" @click="closeDialog" class="w-full">Hủy</Button>
         </div>
@@ -222,8 +213,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger
+  DialogTitle
 } from '@/components/ui/dialog'
 
 import {
@@ -245,13 +235,13 @@ import {
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
 
 import { Input } from '@/components/ui/input'
-import { Plus, Check, ChevronsUpDown } from 'lucide-vue-next'
+import { Check, ChevronsUpDown } from 'lucide-vue-next'
 
 import { computed, ref, onMounted, nextTick } from 'vue'
 import { useBookStore } from '@/stores/useBookStore'
 import { usePublisherStore } from '@/stores/usePublisherStore'
 import { useToast } from '@/components/ui/toast'
-import { uploadImage } from '@/plugins/cloudinary'
+import { changeImage } from '@/plugins/cloudinary'
 import { cn } from '@/lib/utils'
 
 const { toast } = useToast()
@@ -289,7 +279,10 @@ const debouncedSearch = debounce(async () => {
   await publisherStore.fetchPublishers()
 }, 300)
 
-const formValues = ref({
+const id = ref('')
+const oldImageUrl = ref('')
+
+const defaultFormValues = {
   TenSach: '',
   DonGia: 1000,
   SoQuyen: 1,
@@ -297,7 +290,9 @@ const formValues = ref({
   NguonGoc: '',
   MaNXB: '',
   HinhAnh: ''
-})
+}
+
+const formValues = ref(defaultFormValues)
 
 const formSchema = toTypedSchema(
   z.object({
@@ -316,13 +311,13 @@ const formSchema = toTypedSchema(
     MaNXB: z.string().max(100, { message: 'Mã nhà xuất bản là bắt buộc.' }),
     HinhAnh: z
       .any()
-      .refine((file) => file instanceof File, {
+      .optional()
+      .refine((file) => !file || file instanceof File, {
         message: 'Vui lòng chọn một tệp hình ảnh.'
       })
-      .refine((file) => file instanceof File && file.size <= 5000000, {
+      .refine((file) => !file || (file instanceof File && file.size <= 5000000), {
         message: 'Hình ảnh phải có dung lượng nhỏ hơn 5MB.'
       })
-      .optional()
   })
 )
 
@@ -339,7 +334,9 @@ const onSubmit = async (values) => {
   try {
     let imageUrl = ''
     if (values.HinhAnh) {
-      imageUrl = await uploadImage(values.HinhAnh)
+      imageUrl = await changeImage(oldImageUrl.value, values.HinhAnh)
+    } else {
+      imageUrl = oldImageUrl.value
     }
 
     const submitData = {
@@ -347,10 +344,10 @@ const onSubmit = async (values) => {
       HinhAnh: imageUrl
     }
 
-    await bookStore.createBook(submitData)
+    await bookStore.updateBook(id.value, submitData)
 
     toast({
-      title: 'Sách đã được thêm thành công',
+      title: 'Cập nhật sách thành công',
       description: `Thông tin của sách ${values.TenSach} đã được lưu vào hệ thống.`
     })
 
@@ -367,7 +364,20 @@ const onSubmit = async (values) => {
   }
 }
 
-const openDialog = () => {
+const openDialog = async (book) => {
+  id.value = book.MaSach
+  formValues.value.TenSach = book.TenSach
+  formValues.value.DonGia = book.DonGia
+  formValues.value.SoQuyen = book.SoQuyen
+  formValues.value.NamXuatBan = book.NamXuatBan
+  formValues.value.NguonGoc = book.NguonGoc
+  formValues.value.MaNXB = book.MaNXB
+
+  oldImageUrl.value = book.HinhAnh
+
+  await publisherStore.fetchPublisherById(book.MaNXB)
+  selectedTenNXB.value = publisherStore.publisher.TenNXB
+
   dialogOpen.value = true
 }
 
@@ -377,6 +387,10 @@ const closeDialog = () => {
     searchTerm.value = ''
     selectedTenNXB.value = ''
     selectedImage.value = null
+
+    id.value = ''
+    formValues.value = defaultFormValues
+    oldImageUrl.value = ''
   })
 }
 
@@ -385,4 +399,6 @@ const handleDialogUpdate = (isOpen) => {
     closeDialog()
   }
 }
+
+defineExpose({ openDialog })
 </script>

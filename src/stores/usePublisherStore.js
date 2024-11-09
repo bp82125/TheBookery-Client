@@ -46,7 +46,7 @@ export const usePublisherStore = defineStore('publisher', {
       this.loading = true
       try {
         const response = await axiosInstance.get(`/nha-xuat-ban/${id}`)
-        this.publisher = response.data
+        this.publisher = response.data.data
       } catch (error) {
         this.error = error
       } finally {
@@ -110,6 +110,10 @@ export const usePublisherStore = defineStore('publisher', {
     setPaginationParams(page, limit) {
       this.paginationParams.page = page
       this.paginationParams.limit = limit
+    },
+
+    resetState() {
+      this.$reset()
     }
   }
 })

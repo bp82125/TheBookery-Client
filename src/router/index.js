@@ -52,9 +52,9 @@ const router = createRouter({
           component: () => import('../views/subviews/AccountView.vue')
         },
         {
-          path: 'book-tracking',
-          name: 'book-tracking',
-          component: () => import('../views/subviews/BookTrackingView.vue')
+          path: 'tracking',
+          name: 'tracking',
+          component: () => import('../views/subviews/TrackingBookView.vue')
         }
       ]
     },
