@@ -1,7 +1,5 @@
-import { useBookStore } from '@/stores/useBookStore'
-import { usePublisherStore } from '@/stores/usePublisherStore'
-import { useReaderStore } from '@/stores/useReaderStore'
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,54 +8,64 @@ const router = createRouter({
       path: '/',
       name: 'login',
       component: () => import('../views/LoginView.vue'),
-      alias: '/login'
+      alias: '/login',
+      meta: { requiresLogin: false }
     },
     {
       path: '/register',
       name: 'register',
-      component: () => import('../views/RegisterView.vue')
+      component: () => import('../views/RegisterView.vue'),
+      meta: { requiresLogin: false }
     },
     {
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('../views/DashboardView.vue'),
-
+      meta: { requiresLogin: true },
       children: [
         {
           path: '/',
-          name: 'home',
-          component: () => import('../views/subviews/HomeView.vue'),
-          alias: 'home'
-        },
-        {
-          path: 'book',
           name: 'book',
-          component: () => import('../views/subviews/BookView.vue')
+          component: () => import('../views/subviews/BookView.vue'),
+          alias: ['book', 'home'],
+          meta: { requiresLogin: true, requiresRole: ['USER', 'ADMINISTRATOR', 'EMPLOYEE'] }
         },
         {
           path: 'publisher',
           name: 'publisher',
-          component: () => import('../views/subviews/PublisherView.vue')
+          component: () => import('../views/subviews/PublisherView.vue'),
+          meta: { requiresLogin: true, requiresRole: ['ADMINISTRATOR', 'EMPLOYEE'] }
         },
         {
           path: 'reader',
           name: 'reader',
-          component: () => import('../views/subviews/ReaderView.vue')
+          component: () => import('../views/subviews/ReaderView.vue'),
+          meta: { requiresLogin: true, requiresRole: ['ADMINISTRATOR', 'EMPLOYEE'] }
         },
         {
           path: 'employee',
           name: 'employee',
-          component: () => import('../views/subviews/EmployeeView.vue')
+          component: () => import('../views/subviews/EmployeeView.vue'),
+          meta: { requiresLogin: true, requiresRole: ['ADMINISTRATOR'] }
         },
         {
           path: 'account',
           name: 'account',
-          component: () => import('../views/subviews/AccountView.vue')
+          component: () => import('../views/subviews/AccountView.vue'),
+          meta: { requiresLogin: true, requiresRole: ['ADMINISTRATOR'] }
         },
         {
           path: 'tracking',
           name: 'tracking',
-          component: () => import('../views/subviews/TrackingBookView.vue')
+          component: () => import('../views/subviews/TrackingBookView.vue'),
+          meta: { requiresLogin: true, requiresRole: ['USER', 'ADMINISTRATOR', 'EMPLOYEE'] }
+        },
+        {
+          path: 'analysis',
+          name: 'analysis',
+          component: () => import('../views/subviews/AnalystView.vue'),
+
+          meta: { requiresLogin: true, requiresRole: ['ADMINISTRATOR'] }
         }
       ]
     },
@@ -67,6 +75,26 @@ const router = createRouter({
       component: () => import('../views/ErrorView.vue')
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+  const account = authStore.account
+  const loaiTaiKhoan = account?.LoaiTaiKhoan
+
+  if (to.meta.requiresLogin && !account) {
+    return next({ name: 'login' })
+  }
+
+  if (to.meta.requiresRole) {
+    const requiredRoles = to.meta.requiresRole
+
+    if (!requiredRoles.includes(loaiTaiKhoan)) {
+      return next({ name: 'NotFound' })
+    }
+  }
+
+  next()
 })
 
 export default router

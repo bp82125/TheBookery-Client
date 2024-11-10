@@ -4,8 +4,8 @@
       <img src="/NotFound.png" class="md:h-64 object-scale-down" alt="" />
       <p class="text-gray-600">Oops! Không thể truy cập trang bạn muốn chuyển hướng đến.</p>
 
-      <RouterLink to="/dashboard">
-        <Button class="bg-blue-500 hover:bg-blue-700 mt-3">Quay lại trang chủ</Button>
+      <RouterLink to="/dashboard/home">
+        <Button class="bg-blue-500 hover:bg-blue-700 mt-3 w-full">Quay lại trang chủ</Button>
       </RouterLink>
     </div>
   </div>

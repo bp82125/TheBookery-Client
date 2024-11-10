@@ -7,7 +7,9 @@
   <div class="bg-white rounded-lg shadow-lg m-4 p-8">
     <div class="flex flex-row justify-between mt-8 mb-4">
       <TrackingBookSearchBar></TrackingBookSearchBar>
-      <TrackingBookCreateDialog></TrackingBookCreateDialog>
+      <template v-if="LoaiTaiKhoan !== 'USER'">
+        <TrackingBookCreateDialog></TrackingBookCreateDialog>
+      </template>
     </div>
     <TrackingBookTable
       @delete="openDeleteDialog"
@@ -37,7 +39,14 @@ import TrackingBookReturnDialog from './TrackingBookReturnDialog.vue'
 import TrackingBookPagination from './TrackingBookPagination.vue'
 import TrackingBookCreateDialog from './TrackingBookCreateDialog.vue'
 
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useAuthStore } from '@/stores/useAuthStore'
+
+const authStore = useAuthStore()
+
+const LoaiTaiKhoan = computed(() => {
+  return authStore.getLoaiTaiKhoan()
+})
 
 const deleteDialog = ref(null)
 const approveOrRejectDialog = ref(null)

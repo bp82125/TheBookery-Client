@@ -1,5 +1,11 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 mt-8">
+    <template v-if="total_records <= 0">
+      <div class="flex justify-center my-8">
+        <span class="italic">Không tìm thấy đơn mượn sách nào</span>
+      </div>
+    </template>
+
     <div class="flex justify-end">
       <span
         >Trên tổng số <b>{{ total_records }}</b> đơn mượn {{ getStateLabels }}</span

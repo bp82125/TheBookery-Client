@@ -22,6 +22,10 @@ export const useTrackingBookStore = defineStore('tracking', {
     paginationParams: { page: 1, limit: 5 },
 
     stateInfos: {
+      ALL: {
+        name: 'TrangThaiMuonSach',
+        label: 'Trạng thái mượn sách'
+      },
       PENDING: {
         name: 'NgayYeuCau',
         label: 'Ngày yêu cầu'

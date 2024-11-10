@@ -26,15 +26,27 @@
         </div>
       </CardContent>
     </div>
-    <CardFooter class="flex justify-between gap-x-2">
-      <Button variant="outline" class="w-full" @click="handleEdit(book)">
-        <PencilIcon class="mr-2 h-4 w-4" />
-        Chỉnh sửa
-      </Button>
-      <Button variant="destructive" class="w-full" @click="handleDelete(book)">
-        <TrashIcon class="mr-2 h-4 w-4" />
-        Xóa
-      </Button>
+    <CardFooter>
+      <template v-if="LoaiTaiKhoan === 'USER'">
+        <div class="w-full">
+          <Button class="w-full bg-blue-600 hover:bg-blue-700" @click="handleBookBorrowing(book)">
+            <Plus class="mr-2 h-4 w-4" />
+            Yêu cầu mượn sách
+          </Button>
+        </div>
+      </template>
+      <template v-else>
+        <div class="flex justify-between gap-x-2">
+          <Button variant="outline" class="w-full" @click="handleEdit(book)">
+            <PencilIcon class="mr-2 h-4 w-4" />
+            Chỉnh sửa
+          </Button>
+          <Button variant="destructive" class="w-full" @click="handleDelete(book)">
+            <TrashIcon class="mr-2 h-4 w-4" />
+            Xóa
+          </Button>
+        </div>
+      </template>
     </CardFooter>
   </Card>
 </template>
@@ -49,7 +61,15 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { PencilIcon, TrashIcon } from 'lucide-vue-next'
+import { PencilIcon, TrashIcon, Plus } from 'lucide-vue-next'
+import { useAuthStore } from '@/stores/useAuthStore'
+import { computed } from 'vue'
+
+const authStore = useAuthStore()
+
+const LoaiTaiKhoan = computed(() => {
+  return authStore.account?.LoaiTaiKhoan || 'USER'
+})
 
 const props = defineProps({
   book: {
@@ -58,7 +78,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['edit', 'delete'])
+const emit = defineEmits(['edit', 'delete', 'borrow'])
 
 const handleEdit = (book) => {
   emit('edit', book)
@@ -66,5 +86,9 @@ const handleEdit = (book) => {
 
 const handleDelete = (book) => {
   emit('delete', book)
+}
+
+const handleBookBorrowing = (book) => {
+  emit('borrow', book)
 }
 </script>

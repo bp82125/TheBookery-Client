@@ -6,6 +6,7 @@
       :book="book"
       @edit="openUpdateDialog"
       @delete="openDeleteDialog"
+      @borrow="openBorrowDialog"
     />
   </div>
 </template>
@@ -27,7 +28,7 @@ const books = computed(() => {
   return bookStore.books
 })
 
-const emit = defineEmits(['edit', 'delete'])
+const emit = defineEmits(['edit', 'delete', 'borrow'])
 
 const openUpdateDialog = (book) => {
   emit('edit', book)
@@ -35,5 +36,9 @@ const openUpdateDialog = (book) => {
 
 const openDeleteDialog = (book) => {
   emit('delete', book)
+}
+
+const openBorrowDialog = (book) => {
+  emit('borrow', book)
 }
 </script>

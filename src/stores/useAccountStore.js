@@ -62,9 +62,7 @@ export const useAccountStore = defineStore('account', {
       this.error = null
       try {
         const response = await axiosInstance.post('/tai-khoan', account)
-        console.log(response)
         const createdAccount = response.data.data
-        await this.fetchAccounts()
         return createdAccount
       } catch (error) {
         this.error = error.message || 'Failed to create account'
@@ -105,9 +103,26 @@ export const useAccountStore = defineStore('account', {
       this.error = null
       try {
         await axiosInstance.patch(`/tai-khoan/${id}/reset-password`, newPassword)
-        await this.fetchAccounts()
+        const response = await this.fetchAccounts()
+        return response
       } catch (error) {
         this.error = error.message || 'Failed to reset account password'
+        return error.response
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async changePasswordAccount(id, payload) {
+      this.loading = true
+      this.error = null
+      try {
+        const response = await axiosInstance.patch(`/tai-khoan/${id}/change-password`, payload)
+        return response
+      } catch (error) {
+        this.error = error.message || 'Failed to reset account password'
+        console.log(error.response)
+        return error.response
       } finally {
         this.loading = false
       }

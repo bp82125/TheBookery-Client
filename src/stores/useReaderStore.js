@@ -59,7 +59,6 @@ export const useReaderStore = defineStore('reader', {
       this.loading = true
       try {
         await axiosInstance.post('/doc-gia', reader)
-        await this.fetchReaders()
       } catch (error) {
         this.error = error
       } finally {

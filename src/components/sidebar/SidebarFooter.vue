@@ -1,3 +1,4 @@
+<!-- OriginalComponent.vue -->
 <script setup>
 import { Button } from '@/components/ui/button'
 import {
@@ -6,28 +7,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { useAuthStore } from '@/stores/useAuthStore'
 import { Settings, KeyRound, LogOut } from 'lucide-vue-next'
-import { useToast } from '@/components/ui/toast/use-toast'
-
-const { toast } = useToast()
-
-const authStore = useAuthStore()
 
 defineProps({
   isOpen: Boolean
 })
 
-const resetPassword = () => {
-  console.log('Reset Password clicked')
+const emit = defineEmits(['changePassword', 'signOut'])
+
+const handleResetPassword = () => {
+  emit('changePassword')
 }
 
-const signOut = () => {
-  authStore.logout()
-  toast({
-    title: 'Đăng xuất thành công',
-    description: 'Đăng xuất thành công khỏi hệ thống'
-  })
+const handleSignOut = () => {
+  emit('signOut')
 }
 </script>
 
@@ -41,11 +34,11 @@ const signOut = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent class="w-56">
-        <DropdownMenuItem @select="resetPassword">
+        <DropdownMenuItem @select="handleResetPassword">
           <KeyRound class="mr-2 h-4 w-4" />
           <span>Đặt lại mật khẩu</span>
         </DropdownMenuItem>
-        <DropdownMenuItem @select="signOut">
+        <DropdownMenuItem @select="handleSignOut">
           <LogOut class="mr-2 h-4 w-4" />
           <span>Đăng xuất</span>
         </DropdownMenuItem>

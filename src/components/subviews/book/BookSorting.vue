@@ -49,42 +49,40 @@ watch([field, order], ([newField, newOrder]) => {
 </script>
 
 <template>
-  <div class="ml-2 w-full">
-    <DropdownMenu>
-      <DropdownMenuTrigger as-child>
-        <Button variant="ghost" class="flex items-center space-x-2">
-          <span>Sắp xếp: {{ getFieldLabel(field) }} ({{ getOrderLabel(order) }})</span>
-          <ChevronsUpDown class="w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent class="w-56">
-        <DropdownMenuLabel>Sắp xếp theo</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup v-model="field">
+  <DropdownMenu>
+    <DropdownMenuTrigger as-child>
+      <Button variant="ghost" class="flex items-center space-x-2">
+        <span>Sắp xếp: {{ getFieldLabel(field) }} ({{ getOrderLabel(order) }})</span>
+        <ChevronsUpDown class="w-4" />
+      </Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent class="w-56">
+      <DropdownMenuLabel>Sắp xếp theo</DropdownMenuLabel>
+      <DropdownMenuSeparator />
+      <DropdownMenuRadioGroup v-model="field">
+        <DropdownMenuRadioItem
+          v-for="fieldOption in fields"
+          :key="fieldOption.value"
+          :value="fieldOption.value"
+        >
+          {{ fieldOption.label }}
+        </DropdownMenuRadioItem>
+      </DropdownMenuRadioGroup>
+      <DropdownMenuSeparator />
+      <DropdownMenuLabel>Thứ tự</DropdownMenuLabel>
+      <DropdownMenuGroup>
+        <DropdownMenuRadioGroup v-model="order">
           <DropdownMenuRadioItem
-            v-for="fieldOption in fields"
-            :key="fieldOption.value"
-            :value="fieldOption.value"
+            v-for="orderOption in orders"
+            :key="orderOption.value"
+            :value="orderOption.value"
+            class="flex items-center"
           >
-            {{ fieldOption.label }}
+            <component :is="orderOption.icon" class="mr-2 h-4 w-4" />
+            {{ orderOption.label }}
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuLabel>Thứ tự</DropdownMenuLabel>
-        <DropdownMenuGroup>
-          <DropdownMenuRadioGroup v-model="order">
-            <DropdownMenuRadioItem
-              v-for="orderOption in orders"
-              :key="orderOption.value"
-              :value="orderOption.value"
-              class="flex items-center"
-            >
-              <component :is="orderOption.icon" class="mr-2 h-4 w-4" />
-              {{ orderOption.label }}
-            </DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  </div>
+      </DropdownMenuGroup>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </template>

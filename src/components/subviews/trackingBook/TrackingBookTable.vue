@@ -86,7 +86,7 @@
           }}</TableCell>
         </template>
         <TableCell class="text-right">
-          <template v-if="currentState === 'PENDING'">
+          <template v-if="currentState === 'PENDING' && LoaiTaiKhoan !== 'USER'">
             <Button
               variant="outline"
               class="mr-2"
@@ -99,7 +99,7 @@
               </div>
             </Button>
           </template>
-          <template v-if="currentState === 'APPROVED'">
+          <template v-if="currentState === 'APPROVED' && LoaiTaiKhoan !== 'USER'">
             <Button variant="outline" class="mr-2" size="sm" @click="pickUpBook(trackingBook)">
               <div class="flex flex-row items-center space-x-2">
                 <BookUp class="size-4"></BookUp>
@@ -108,7 +108,7 @@
             </Button>
           </template>
 
-          <template v-if="currentState === 'PICKED_UP'">
+          <template v-if="currentState === 'PICKED_UP' && LoaiTaiKhoan !== 'USER'">
             <Button variant="outline" class="mr-2" size="sm" @click="returnBook(trackingBook)">
               <div class="flex flex-row items-center space-x-2">
                 <Undo2 class="size-4"></Undo2>
@@ -116,12 +116,18 @@
               </div>
             </Button>
           </template>
-          <Button variant="destructive" size="sm" @click="deleteTrackingBook(trackingBook)">
-            <div class="flex flex-row items-center space-x-2">
-              <Trash class="size-4"></Trash>
-              <span> Xóa</span>
-            </div>
-          </Button>
+          <template
+            v-if="
+              currentState === 'PENDING' || (currentState !== 'PENDING' && LoaiTaiKhoan !== 'USER')
+            "
+          >
+            <Button variant="destructive" size="sm" @click="deleteTrackingBook(trackingBook)">
+              <div class="flex flex-row items-center space-x-2">
+                <Trash class="size-4"></Trash>
+                <span> Xóa</span>
+              </div>
+            </Button>
+          </template>
         </TableCell>
       </TableRow>
     </TableBody>
@@ -142,13 +148,23 @@ import { computed, onMounted, defineComponent, h } from 'vue'
 import { Trash, ChevronUp, ChevronDown, Undo2, BookUp, ChevronsRight } from 'lucide-vue-next'
 import { ref } from 'vue'
 import { useTrackingBookStore } from '@/stores/useTrackingBookStore'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 const currentSort = ref('')
 const currentSortDir = ref('asc')
 
 const trackingBookStore = useTrackingBookStore()
+const authStore = useAuthStore()
+
+const LoaiTaiKhoan = computed(() => {
+  return authStore.getLoaiTaiKhoan()
+})
 
 onMounted(async () => {
+  if (LoaiTaiKhoan.value === 'USER') {
+    const MaDocGia = authStore.getMaDocGIa()
+    trackingBookStore.setSearchParams('MaDocGia', MaDocGia)
+  }
   await trackingBookStore.fetchTrackingBooks()
 })
 

@@ -1,11 +1,14 @@
 <template>
   <Dialog v-model:open="dialogOpen" @update:open="handleDialogUpdate">
-    <DialogTrigger as-child>
-      <Button class="inline-flex items-center bg-blue-600 hover:bg-blue-500" @click="openDialog">
-        <Plus class="size-4 mr-2"></Plus>
-        <span>Thêm sách mới</span>
-      </Button>
-    </DialogTrigger>
+    <template v-if="LoaiTaiKhoan !== 'USER'">
+      <DialogTrigger as-child>
+        <Button class="inline-flex items-center bg-blue-600 hover:bg-blue-500" @click="openDialog">
+          <Plus class="size-4 mr-2"></Plus>
+          <span>Thêm sách mới</span>
+        </Button>
+      </DialogTrigger>
+    </template>
+
     <DialogContent class="sm:max-w-lg">
       <DialogHeader>
         <DialogTitle>Thêm sách mới</DialogTitle>
@@ -250,10 +253,16 @@ import { usePublisherStore } from '@/stores/usePublisherStore'
 import { useToast } from '@/components/ui/toast'
 import { uploadImage } from '@/plugins/cloudinary'
 import { cn } from '@/lib/utils'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 const { toast } = useToast()
 const bookStore = useBookStore()
 const publisherStore = usePublisherStore()
+const authStore = useAuthStore()
+
+const LoaiTaiKhoan = computed(() => {
+  return authStore.getLoaiTaiKhoan()
+})
 
 onMounted(async () => {
   await publisherStore.fetchPublishers()

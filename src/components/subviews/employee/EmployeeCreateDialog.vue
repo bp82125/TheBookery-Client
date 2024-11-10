@@ -339,6 +339,7 @@ const onSubmit = async (inputValues) => {
   try {
     formError.value = ''
     const createdAccount = await accountStore.createAccount(accountInfo)
+    await accountStore.fetchAccounts()
     const MaTaiKhoan = createdAccount?.MaTaiKhoan
 
     if (MaTaiKhoan) {

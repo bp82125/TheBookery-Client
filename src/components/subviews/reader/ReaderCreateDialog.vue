@@ -412,11 +412,13 @@ const onSubmit = async (inputValues) => {
   try {
     formError.value = ''
     const createdAccount = await accountStore.createAccount(accountInfo)
+    await accountStore.fetchAccounts()
     const MaTaiKhoan = createdAccount?.MaTaiKhoan
 
     if (MaTaiKhoan) {
       const readerInfo = { ...basicInfo, MaTaiKhoan }
       await readerStore.createReader(readerInfo)
+      await readerStore.fetchReaders()
       stepIndex.value = 1
       toast({
         title: 'Thêm đọc giả',

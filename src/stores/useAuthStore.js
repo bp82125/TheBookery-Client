@@ -9,7 +9,7 @@ const { toast } = useToast()
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: null,
+    account: null,
     loading: false,
     error: null,
     token: null
@@ -36,13 +36,13 @@ export const useAuthStore = defineStore('auth', {
         )
 
         if (response.data.success) {
-          const { user, token } = response.data.data
+          const { account, token } = response.data.data
 
           this.token = token
-          this.user = user
+          this.account = account
 
           VueCookies.set('token', token)
-          VueCookies.set('user', JSON.stringify(user))
+          VueCookies.set('account', JSON.stringify(account))
 
           axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`
           toast({
@@ -58,32 +58,42 @@ export const useAuthStore = defineStore('auth', {
           })
         }
       } catch (error) {
-        this.error = error.response?.data?.message || 'Failed to login'
+        this.error =
+          error.response?.data?.message ||
+          'Đã xảy ra lỗi khi đăng nhập vào hệ thống. Hãy kiểm tra và thử lại.'
       } finally {
         this.loading = false
       }
     },
 
     logout() {
-      this.user = null
-      this.token = null
+      router.push({ name: 'login' })
 
       VueCookies.remove('token')
-      VueCookies.remove('user')
+      VueCookies.remove('account')
+
+      this.account = null
+      this.token = null
 
       delete axiosInstance.defaults.headers.common['Authorization']
-      router.push('/login')
     },
 
-    loadUserFromCookies() {
+    fetchAccountInfos() {
       const token = VueCookies.get('token')
-      const user = VueCookies.get('user')
+      const account = VueCookies.get('account')
 
-      if (token && user) {
+      if (token && account) {
         this.token = token
-        this.user = JSON.parse(user)
-        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        this.account = account
+      } else if (router.currentRoute.value.meta.requireLogin) {
+        router.push({ name: 'login' })
       }
+    },
+    getLoaiTaiKhoan() {
+      return this.account?.LoaiTaiKhoan
+    },
+    getMaDocGIa() {
+      return this.account?.DocGia?.MaDocGia
     }
   }
 })

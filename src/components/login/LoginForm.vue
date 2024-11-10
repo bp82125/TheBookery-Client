@@ -26,7 +26,7 @@
         {{ isLoading ? 'Đăng nhập...' : 'Đăng nhập' }}
       </Button>
     </div>
-    <div v-if="error" class="mt-4 text-red-500 text-sm text-center">
+    <div v-if="error" class="mt-4 text-red-500 text-sm">
       {{ error }}
     </div>
   </form>
@@ -38,7 +38,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuthStore } from '@/stores/useAuthStore'
-import router from '@/router'
 
 const username = ref('')
 const password = ref('')
@@ -48,6 +47,7 @@ const error = ref('')
 const authStore = useAuthStore()
 
 const handleSubmit = async () => {
+  error.value = ''
   if (!username.value || !password.value) {
     error.value = 'Please fill in all fields.'
     return
@@ -56,14 +56,10 @@ const handleSubmit = async () => {
   error.value = ''
   isLoading.value = true
 
-  try {
-    await authStore.login(username.value, password.value)
+  setTimeout(() => {}, 1000)
+  await authStore.login(username.value, password.value)
 
-
-  } catch (err) {
-    error.value = authStore.error || 'Invalid username or password. Please try again.'
-  } finally {
-    isLoading.value = false
-  }
+  error.value = authStore.error
+  isLoading.value = false
 }
 </script>

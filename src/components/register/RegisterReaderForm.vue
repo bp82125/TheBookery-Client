@@ -242,7 +242,7 @@
             >
               Tiếp theo
             </Button>
-            <Button v-if="stepIndex === 3" type="submit" class="w-full"> Thêm </Button>
+            <Button v-if="stepIndex === 3" type="submit" class="w-full"> Đăng ký </Button>
           </div>
         </div>
       </form>
@@ -291,6 +291,7 @@ import { useAccountStore } from '@/stores/useAccountStore'
 
 import * as z from 'zod'
 import { useToast } from '@/components/ui/toast'
+import router from '@/router'
 
 const { toast } = useToast()
 
@@ -388,8 +389,8 @@ const onSubmit = async (inputValues) => {
       await readerStore.createReader(readerInfo)
       stepIndex.value = 1
       toast({
-        title: 'Thêm đọc giả',
-        description: `Đọc giả ${readerInfo.HoLot + ' ' + readerInfo.Ten} được thêm thành công`
+        title: 'Đăng ký tài khoản',
+        description: `Tài khoản đã được đăng ký thành công. Hãy tiến hành đăng nhập vào hệ thống.`
       })
     } else {
       toast({
@@ -405,6 +406,8 @@ const onSubmit = async (inputValues) => {
     } else {
       formError.value = 'Đã xảy ra lỗi khi tạo tài khoản. Vui lòng thử lại.'
     }
+  } finally {
+    router.push({ name: 'login' })
   }
 }
 </script>
