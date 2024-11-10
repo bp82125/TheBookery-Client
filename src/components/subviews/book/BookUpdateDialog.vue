@@ -301,7 +301,7 @@ const formSchema = toTypedSchema(
       .min(1, { message: 'Tên sách là bắt buộc.' })
       .max(100, { message: 'Tên sách không được quá 100 ký tự.' }),
     DonGia: z.number().min(1000, { message: 'Đơn giá phải lớn hơn 1000.' }),
-    SoQuyen: z.number().min(1, { message: 'Số quyển phải lớn hơn 0.' }),
+    SoQuyen: z.number().min(0, { message: 'Số quyển phải lớn hơn hoặc bằng 0.' }),
     NamXuatBan: z
       .number()
       .int()

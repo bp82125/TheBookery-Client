@@ -1,4 +1,3 @@
-<!-- LoginForm.vue -->
 <template>
   <form @submit.prevent="handleSubmit">
     <div class="space-y-4">
@@ -19,6 +18,7 @@
           v-model="password"
           type="password"
           placeholder="Nhập mật khẩu của bạn"
+          autocomplete
           required
         />
       </div>
@@ -37,13 +37,15 @@ import { ref } from 'vue'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-
+import { useAuthStore } from '@/stores/useAuthStore'
 import router from '@/router'
 
 const username = ref('')
 const password = ref('')
 const isLoading = ref(false)
 const error = ref('')
+
+const authStore = useAuthStore()
 
 const handleSubmit = async () => {
   if (!username.value || !password.value) {
@@ -55,11 +57,11 @@ const handleSubmit = async () => {
   isLoading.value = true
 
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    alert('Login successful', { username: username.value, password: password.value })
-    router.push('/dashboard')
-  } catch (error) {
-    error.value = 'Invalid username or password. Please try again.'
+    await authStore.login(username.value, password.value)
+
+
+  } catch (err) {
+    error.value = authStore.error || 'Invalid username or password. Please try again.'
   } finally {
     isLoading.value = false
   }

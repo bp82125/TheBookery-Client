@@ -6,7 +6,7 @@ import { onBeforeRouteLeave } from 'vue-router'
 const publisherStore = usePublisherStore()
 
 onBeforeRouteLeave((to, from) => {
-  publisherStore.resetState()
+  publisherStore.resetStates()
 })
 </script>
 

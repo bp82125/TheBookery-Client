@@ -39,7 +39,6 @@ export const useEmployeeStore = defineStore('employee', {
         this.positions = response.data.data.chucVus
       } catch (error) {
         this.error = error
-        console.log(error)
       } finally {
         this.loading = false
       }
@@ -114,6 +113,9 @@ export const useEmployeeStore = defineStore('employee', {
     setPaginationParams(page, limit) {
       this.paginationParams.page = page
       this.paginationParams.limit = limit
+    },
+    resetStates() {
+      this.$reset()
     }
   }
 })

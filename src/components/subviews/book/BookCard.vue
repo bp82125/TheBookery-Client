@@ -4,6 +4,7 @@
       <img
         :src="book.HinhAnh || `https://picsum.photos/800`"
         :alt="book.TenSach"
+        loading="lazy"
         class="object-cover w-full h-full"
       />
     </div>

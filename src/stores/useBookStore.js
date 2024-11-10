@@ -115,6 +115,9 @@ export const useBookStore = defineStore('book', {
     setPaginationParams(page, limit) {
       this.paginationParams.page = page
       this.paginationParams.limit = limit
+    },
+    resetStates() {
+      this.$reset()
     }
   }
 })

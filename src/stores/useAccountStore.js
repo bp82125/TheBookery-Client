@@ -143,6 +143,9 @@ export const useAccountStore = defineStore('account', {
     setPaginationParams(page, limit) {
       this.paginationParams.page = page
       this.paginationParams.limit = limit
+    },
+    resetStates() {
+      this.$reset()
     }
   }
 })

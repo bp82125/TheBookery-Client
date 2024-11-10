@@ -1,10 +1,7 @@
 <template>
   <Dialog v-model:open="dialogOpen" @update:open="handleDialogUpdate">
     <DialogTrigger as-child>
-      <Button
-        class="inline-flex items-center bg-blue-600 hover:bg-blue-500"
-        @click="dialogOpen = true"
-      >
+      <Button class="inline-flex items-center bg-blue-600 hover:bg-blue-500" @click="openDialog">
         <Plus class="size-4 mr-2"></Plus>
         <span>Thêm sách mới</span>
       </Button>

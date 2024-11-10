@@ -112,7 +112,7 @@ export const usePublisherStore = defineStore('publisher', {
       this.paginationParams.limit = limit
     },
 
-    resetState() {
+    resetStates() {
       this.$reset()
     }
   }

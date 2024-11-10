@@ -40,6 +40,9 @@ export const useSignatureStore = defineStore('signature', {
       this.api_key = null
       this.cloudName = null
       this.error = null
+    },
+    resetStates() {
+      this.$reset()
     }
   }
 })

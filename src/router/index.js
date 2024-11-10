@@ -1,3 +1,6 @@
+import { useBookStore } from '@/stores/useBookStore'
+import { usePublisherStore } from '@/stores/usePublisherStore'
+import { useReaderStore } from '@/stores/useReaderStore'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({

@@ -181,6 +181,9 @@ export const useTrackingBookStore = defineStore('tracking', {
 
     getCurrentStateInfo() {
       return this.stateInfos[this.getCurrentState()]
+    },
+    resetStates() {
+      this.$reset()
     }
   }
 })

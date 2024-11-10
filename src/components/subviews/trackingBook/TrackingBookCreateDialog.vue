@@ -1,10 +1,7 @@
 <template>
   <Dialog v-model:open="dialogOpen" @update:open="handleDialogUpdate">
     <DialogTrigger as-child>
-      <Button
-        class="inline-flex items-center bg-blue-600 hover:bg-blue-500"
-        @click="dialogOpen = true"
-      >
+      <Button class="inline-flex items-center bg-blue-600 hover:bg-blue-500" @click="openDialog">
         <Plus class="size-4 mr-2" />
         <span>Thêm yêu cầu mượn sách</span>
       </Button>
@@ -182,7 +179,7 @@ import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover
 
 import { Plus, Check, ChevronsUpDown } from 'lucide-vue-next'
 
-import { computed, ref, onMounted, nextTick } from 'vue'
+import { computed, ref, nextTick } from 'vue'
 import { useReaderStore } from '@/stores/useReaderStore'
 import { useBookStore } from '@/stores/useBookStore'
 import { useToast } from '@/components/ui/toast'
@@ -193,11 +190,6 @@ const { toast } = useToast()
 const readerStore = useReaderStore()
 const bookStore = useBookStore()
 const trackingBookStore = useTrackingBookStore()
-
-onMounted(async () => {
-  await readerStore.fetchReaders()
-  await bookStore.fetchBooks()
-})
 
 const readers = computed(() => readerStore.readers)
 const books = computed(() => bookStore.books)
@@ -261,6 +253,18 @@ const onSubmit = async (values) => {
     })
   }
   closeDialog()
+}
+
+const openDialog = async () => {
+  bookStore.resetStates()
+  readerStore.resetStates()
+
+  bookStore.setPaginationParams(1, 5)
+
+  await bookStore.fetchBooks()
+  await readerStore.fetchReaders()
+
+  dialogOpen.value = true
 }
 
 const closeDialog = () => {
