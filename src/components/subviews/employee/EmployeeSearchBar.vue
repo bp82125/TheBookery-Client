@@ -50,6 +50,12 @@ const fetchWithDebounce = debounce(async () => {
 watch(searchTerm, () => {
   fetchWithDebounce()
 })
+
+watch(field, (newField, oldField) => {
+  employeeStore.setSearchParams(oldField)
+  searchTerm.value = ''
+  fetchWithDebounce()
+})
 </script>
 
 <template>

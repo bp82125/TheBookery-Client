@@ -20,7 +20,6 @@ const searchTerm = ref('')
 const bookStore = useBookStore()
 
 const fields = [
-  { value: 'MaSach', label: 'Mã sách' },
   { value: 'TenSach', label: 'Tên sách' },
   { value: 'DonGia', label: 'Đơn giá' },
   { value: 'SoQuyen', label: 'Số quyển' },
@@ -50,6 +49,12 @@ const fetchWithDebounce = debounce(async () => {
 }, 300)
 
 watch(searchTerm, () => {
+  fetchWithDebounce()
+})
+
+watch(field, (newField, oldField) => {
+  bookStore.setSearchParams(oldField)
+  searchTerm.value = ''
   fetchWithDebounce()
 })
 </script>

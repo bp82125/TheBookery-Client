@@ -79,7 +79,7 @@
         <TableCell class="">{{ formatISODate(account.createdAt) }}</TableCell>
         <TableCell class="text-right max-w-fit">
           <Button variant="outline" size="sm" class="mr-2" @click="resetPasswordAccount(account)">
-            <Settings2 class="size-4"></Settings2>
+            <KeyRound class="size-4"></KeyRound>
           </Button>
           <Button size="sm" class="mr-2" @click="toggleAccount(account)">
             <template v-if="account.KichHoat">
@@ -110,7 +110,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { computed, onMounted, defineComponent, h } from 'vue'
 import {
-  Settings2,
+  KeyRound,
   LockKeyhole,
   LockKeyholeOpen,
   Trash,
@@ -151,7 +151,7 @@ const formatISODate = (isoDate) => {
 
 const formatAccountType = (type) => {
   if (type === 'USER') {
-    return 'Độc giả'
+    return 'Đọc giả'
   }
   if (type === 'EMPLOYEE') {
     return 'Nhân viên'
@@ -163,7 +163,7 @@ const formatAccountType = (type) => {
 
 const getFullName = (account) => {
   if (account.DocGia) {
-    return `${account.DocGia.HoLot} ${account.DocGia.Ten}`
+    return account.DocGia.HoTen
   } else if (account.NhanVien) {
     return account.NhanVien.HoTenNV
   }

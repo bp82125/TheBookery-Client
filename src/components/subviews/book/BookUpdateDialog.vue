@@ -185,10 +185,10 @@
         </FormField>
 
         <div class="flex flex-row w-full space-x-2 mt-6">
+          <Button variant="outline" @click="closeDialog" class="w-full">Hủy</Button>
           <Button type="submit" class="w-full" :disabled="isSubmitting">
             {{ isSubmitting ? 'Đang xử lý...' : 'Cập nhật' }}
           </Button>
-          <Button variant="outline" @click="closeDialog" class="w-full">Hủy</Button>
         </div>
       </Form>
     </DialogContent>

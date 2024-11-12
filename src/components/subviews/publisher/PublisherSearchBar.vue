@@ -20,7 +20,6 @@ const searchTerm = ref('')
 const publisherStore = usePublisherStore()
 
 const fields = [
-  { value: 'MaNXB', label: 'Mã NXB' },
   { value: 'TenNXB', label: 'Tên NXB' },
   { value: 'DiaChi', label: 'Địa chỉ' }
 ]
@@ -46,6 +45,12 @@ const fetchWithDebounce = debounce(async () => {
 }, 300)
 
 watch(searchTerm, () => {
+  fetchWithDebounce()
+})
+
+watch(field, (newField, oldField) => {
+  publisherStore.setSearchParams(oldField)
+  searchTerm.value = ''
   fetchWithDebounce()
 })
 </script>

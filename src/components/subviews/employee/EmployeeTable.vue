@@ -98,13 +98,15 @@ import {
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { computed, onMounted, defineComponent, h } from 'vue'
-import { Pencil, Trash, ChevronUp, ChevronDown } from 'lucide-vue-next'
+import { Pencil, Trash, ChevronUp, ChevronDown, Lock } from 'lucide-vue-next'
 import { ref } from 'vue'
 
 import { useEmployeeStore } from '@/stores/useEmployeeStore'
 
 const currentSort = ref('')
 const currentSortDir = ref('asc')
+
+const nonSortableColumns = ['MSNV']
 
 const employeeStore = useEmployeeStore()
 
@@ -115,6 +117,12 @@ onMounted(async () => {
 const employees = computed(() => employeeStore.employees)
 
 const sort = async (column) => {
+  if (nonSortableColumns.includes(column)) {
+    currentSort.value = column
+    currentSortDir.value = 'asc'
+    return
+  }
+
   if (column === currentSort.value) {
     currentSortDir.value = currentSortDir.value === 'asc' ? 'desc' : 'asc'
   } else {
@@ -132,6 +140,11 @@ const SortIcon = defineComponent({
       if (props.column !== props.currentSort) {
         return null
       }
+
+      if (nonSortableColumns.includes(props.column)) {
+        return h(Lock, { class: 'ml-1 text-gray-500 size-4' })
+      }
+
       return h(props.currentSortDir === 'asc' ? ChevronUp : ChevronDown, {
         class: 'inline-block ml-1 size-4'
       })

@@ -9,12 +9,18 @@ import {
   Newspaper,
   CircleUser,
   NotepadText,
-  ChartColumn
+  ChartPie
 } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/useAuthStore'
 import { computed, onMounted } from 'vue'
 
 const navItems = [
+  {
+    name: 'Tổng quan',
+    icon: ChartPie,
+    route: '/dashboard/overview',
+    allowRoles: ['ADMINISTRATOR']
+  },
   {
     name: 'Sách',
     icon: BookOpenText,
@@ -50,12 +56,6 @@ const navItems = [
     icon: NotepadText,
     route: '/dashboard/tracking',
     allowRoles: ['USER', 'EMPLOYEE, ADMINISTRATOR']
-  },
-  {
-    name: 'Thống kê',
-    icon: ChartColumn,
-    route: '/dashboard/analysis',
-    allowRoles: ['ADMINISTRATOR']
   }
 ]
 

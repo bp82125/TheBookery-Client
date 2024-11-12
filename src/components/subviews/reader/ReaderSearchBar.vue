@@ -15,13 +15,12 @@ import { ChevronsUpDown } from 'lucide-vue-next'
 import { useReaderStore } from '@/stores/useReaderStore'
 import { watch } from 'vue'
 
-const field = ref('Ten')
+const field = ref('HoTen')
 const searchTerm = ref('')
 const readerStore = useReaderStore()
 
 const fields = [
-  { value: 'HoLot', label: 'Họ lót' },
-  { value: 'Ten', label: 'Tên' },
+  { value: 'HoTen', label: 'Họ tên' },
   { value: 'DiaChi', label: 'Địa chỉ' },
   { value: 'DienThoai', label: 'Số điện thoại' },
   { value: 'TaiKhoan.TenDangNhap', label: 'Tên đăng nhập' }
@@ -48,6 +47,12 @@ const fetchWithDebounce = debounce(async () => {
 }, 300)
 
 watch(searchTerm, () => {
+  fetchWithDebounce()
+})
+
+watch(field, (newField, oldField) => {
+  readerStore.setSearchParams(oldField)
+  searchTerm.value = ''
   fetchWithDebounce()
 })
 </script>

@@ -20,7 +20,6 @@ const searchTerm = ref('')
 const accountStore = useAccountStore()
 
 const fields = [
-  { value: 'MaTaiKhoan', label: 'Mã tài khoản' },
   { value: 'TenDangNhap', label: 'Tên đăng nhập' },
   { value: 'LoaiTaiKhoan', label: 'Loại tài khoản' }
 ]

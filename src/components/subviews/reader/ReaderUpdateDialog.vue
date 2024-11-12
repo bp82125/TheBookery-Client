@@ -97,8 +97,8 @@
           </FormField>
 
           <div class="flex flex-row w-full space-x-2 mt-6">
-            <Button type="submit" class="w-full"> Cập nhật </Button>
             <Button variant="outline" @click="closeDialog" class="w-full">Hủy</Button>
+            <Button type="submit" class="w-full"> Cập nhật </Button>
           </div>
         </div>
       </Form>

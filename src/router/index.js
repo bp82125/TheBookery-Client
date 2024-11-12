@@ -61,9 +61,9 @@ const router = createRouter({
           meta: { requiresLogin: true, requiresRole: ['USER', 'ADMINISTRATOR', 'EMPLOYEE'] }
         },
         {
-          path: 'analysis',
-          name: 'analysis',
-          component: () => import('../views/subviews/AnalystView.vue'),
+          path: 'overview',
+          name: 'overview',
+          component: () => import('../views/subviews/OverviewView.vue'),
 
           meta: { requiresLogin: true, requiresRole: ['ADMINISTRATOR'] }
         }

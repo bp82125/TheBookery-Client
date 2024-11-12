@@ -22,11 +22,11 @@
             />
           </div>
         </TableHead>
-        <TableHead @click="sort('DocGia.Ten')" class="cursor-pointer">
+        <TableHead @click="sort('DocGia.HoTen')" class="cursor-pointer">
           <div class="flex items-center">
             <span> Người mượn</span>
             <SortIcon
-              :column="'DocGia.Ten'"
+              :column="'DocGia.HoTen'"
               :currentSort="currentSort"
               :currentSortDir="currentSortDir"
             />
@@ -145,13 +145,15 @@ import {
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { computed, onMounted, defineComponent, h } from 'vue'
-import { Trash, ChevronUp, ChevronDown, Undo2, BookUp, ChevronsRight } from 'lucide-vue-next'
+import { Trash, ChevronUp, ChevronDown, Undo2, BookUp, ChevronsRight, Lock } from 'lucide-vue-next'
 import { ref } from 'vue'
 import { useTrackingBookStore } from '@/stores/useTrackingBookStore'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 const currentSort = ref('')
 const currentSortDir = ref('asc')
+
+const nonSortableColumns = ['MaTDMS']
 
 const trackingBookStore = useTrackingBookStore()
 const authStore = useAuthStore()
@@ -188,6 +190,9 @@ const isRecordExpired = (dateString) => {
 }
 
 const formatDateToVietnamese = (dateString) => {
+  if (!dateString) {
+    return ''
+  }
   const date = new Date(dateString)
   return new Intl.DateTimeFormat('vi-VN', {
     day: '2-digit',
@@ -198,6 +203,12 @@ const formatDateToVietnamese = (dateString) => {
 }
 
 const sort = async (column) => {
+  if (nonSortableColumns.includes(column)) {
+    currentSort.value = column
+    currentSortDir.value = 'asc'
+    return
+  }
+
   if (column === currentSort.value) {
     currentSortDir.value = currentSortDir.value === 'asc' ? 'desc' : 'asc'
   } else {
@@ -215,6 +226,11 @@ const SortIcon = defineComponent({
       if (props.column !== props.currentSort) {
         return null
       }
+
+      if (nonSortableColumns.includes(props.column)) {
+        return h(Lock, { class: 'ml-1 text-gray-500 size-4' })
+      }
+
       return h(props.currentSortDir === 'asc' ? ChevronUp : ChevronDown, {
         class: 'inline-block ml-1 size-4'
       })

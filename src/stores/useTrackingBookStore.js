@@ -18,7 +18,7 @@ export const useTrackingBookStore = defineStore('tracking', {
     },
 
     searchParams: {},
-    sortParams: {},
+    sortParams: { order: 'desc' },
     paginationParams: { page: 1, limit: 5 },
 
     stateInfos: {

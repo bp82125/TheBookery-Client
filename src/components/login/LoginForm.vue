@@ -56,7 +56,6 @@ const handleSubmit = async () => {
   error.value = ''
   isLoading.value = true
 
-  setTimeout(() => {}, 1000)
   await authStore.login(username.value, password.value)
 
   error.value = authStore.error

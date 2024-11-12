@@ -214,7 +214,7 @@ function debounce(func, delay) {
 }
 
 const debouncedReaderSearch = debounce(async () => {
-  readerStore.setSearchParams('HoLot', readerSearchTerm.value)
+  readerStore.setSearchParams('HoTen', readerSearchTerm.value)
   await readerStore.fetchReaders()
 }, 300)
 

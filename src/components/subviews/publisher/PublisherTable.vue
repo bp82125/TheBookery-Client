@@ -76,7 +76,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { computed, onMounted, defineComponent, h } from 'vue'
 import { usePublisherStore } from '@/stores/usePublisherStore'
-import { Pencil, Trash, ChevronUp, ChevronDown } from 'lucide-vue-next'
+import { Pencil, Trash, ChevronUp, ChevronDown, Lock } from 'lucide-vue-next'
 import { ref } from 'vue'
 
 const currentSort = ref('')
@@ -88,9 +88,17 @@ onMounted(async () => {
   await publisherStore.fetchPublishers()
 })
 
+const nonSortableColumns = ['MaNXB']
+
 const publishers = computed(() => publisherStore.publishers)
 
 const sort = async (column) => {
+  if (nonSortableColumns.includes(column)) {
+    currentSort.value = column
+    currentSortDir.value = 'asc'
+    return
+  }
+
   if (column === currentSort.value) {
     currentSortDir.value = currentSortDir.value === 'asc' ? 'desc' : 'asc'
   } else {
@@ -108,6 +116,11 @@ const SortIcon = defineComponent({
       if (props.column !== props.currentSort) {
         return null
       }
+
+      if (nonSortableColumns.includes(props.column)) {
+        return h(Lock, { class: 'ml-1 text-gray-500 size-4' })
+      }
+
       return h(props.currentSortDir === 'asc' ? ChevronUp : ChevronDown, {
         class: 'inline-block ml-1 size-4'
       })

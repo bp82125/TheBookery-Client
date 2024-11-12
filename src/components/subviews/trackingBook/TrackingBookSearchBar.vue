@@ -35,7 +35,7 @@
 <script setup>
 import { Search } from 'lucide-vue-next'
 import { Input } from '@/components/ui/input'
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -56,7 +56,7 @@ const trackingBookStore = useTrackingBookStore()
 const fields = [
   { value: 'MaTDMS', label: 'Mã mượn sách' },
   { value: 'Sach.TenSach', label: 'Tên sách' },
-  { value: 'DocGia.Ten', label: 'Tên đọc giả' }
+  { value: 'DocGia.HoTen', label: 'Họ tên đọc giả' }
 ]
 
 const getFieldLabel = (value) => {
@@ -80,6 +80,12 @@ const fetchWithDebounce = debounce(async () => {
 }, 300)
 
 watch(searchTerm, () => {
+  fetchWithDebounce()
+})
+
+watch(field, (newField, oldField) => {
+  trackingBookStore.setSearchParams(oldField)
+  searchTerm.value = ''
   fetchWithDebounce()
 })
 </script>
