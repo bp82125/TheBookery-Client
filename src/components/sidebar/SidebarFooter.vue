@@ -7,13 +7,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { Settings, KeyRound, LogOut } from 'lucide-vue-next'
+import { useAuthStore } from '@/stores/useAuthStore'
+import { Settings, KeyRound, LogOut, User } from 'lucide-vue-next'
+import { computed } from 'vue'
 
 defineProps({
   isOpen: Boolean
 })
 
-const emit = defineEmits(['changePassword', 'signOut'])
+const authStore = useAuthStore()
+
+const isAdmin = computed(() => {
+  return authStore.account.LoaiTaiKhoan === 'ADMINISTRATOR'
+})
+
+const emit = defineEmits(['changePassword', 'signOut', 'updateInfo'])
 
 const handleResetPassword = () => {
   emit('changePassword')
@@ -21,6 +29,10 @@ const handleResetPassword = () => {
 
 const handleSignOut = () => {
   emit('signOut')
+}
+
+const handleUpdateInfo = () => {
+  emit('updateInfo')
 }
 </script>
 
@@ -34,6 +46,13 @@ const handleSignOut = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent class="w-56">
+        <template v-if="!isAdmin">
+          <DropdownMenuItem @select="handleUpdateInfo">
+            <User class="mr-2 h-4 w-4" />
+            <span>Chỉnh sửa thông tin</span>
+          </DropdownMenuItem>
+        </template>
+
         <DropdownMenuItem @select="handleResetPassword">
           <KeyRound class="mr-2 h-4 w-4" />
           <span>Đặt lại mật khẩu</span>

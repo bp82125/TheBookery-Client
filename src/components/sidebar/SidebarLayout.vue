@@ -9,10 +9,12 @@
       :is-open="isOpen"
       @changePassword="openChangePasswordDialog"
       @signOut="openSignOutDialog"
+      @updateInfo="openUpdateInfoDialog"
     ></SidebarFooter>
 
     <SignoutDialog ref="signOutDialog"></SignoutDialog>
     <AccountChangePasswordDialog ref="changePasswordDialog"></AccountChangePasswordDialog>
+    <AccountChangeInfoDialog ref="updateInfoDialog"></AccountChangeInfoDialog>
   </aside>
 </template>
 
@@ -24,10 +26,12 @@ import SidebarFooter from './SidebarFooter.vue'
 
 import SignoutDialog from './SignoutDialog.vue'
 import AccountChangePasswordDialog from './AccountChangePasswordDialog.vue'
+import AccountChangeInfoDialog from './AccountChangeInfoDialog.vue'
 
 const isOpen = ref(true)
 const signOutDialog = ref(null)
 const changePasswordDialog = ref(null)
+const updateInfoDialog = ref(null)
 
 const openSignOutDialog = () => {
   console.log('Hi')
@@ -36,6 +40,10 @@ const openSignOutDialog = () => {
 
 const openChangePasswordDialog = () => {
   changePasswordDialog.value.openDialog()
+}
+
+const openUpdateInfoDialog = () => {
+  updateInfoDialog.value.openDialog()
 }
 
 const toggleSidebar = () => {

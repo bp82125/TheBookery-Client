@@ -89,6 +89,22 @@ export const useAuthStore = defineStore('auth', {
         router.push({ name: 'login' })
       }
     },
+
+    async fetchAccountById(id) {
+      this.loading = true
+      this.error = null
+      try {
+        const response = await axiosInstance.get(`/tai-khoan/${id}`)
+        this.account = response.data.data
+
+        VueCookies.remove('account')
+        VueCookies.set('account', JSON.stringify(this.account))
+      } catch (error) {
+        this.error = error.message || 'Failed to fetch account details'
+      } finally {
+        this.loading = false
+      }
+    },
     getLoaiTaiKhoan() {
       return this.account?.LoaiTaiKhoan
     },
