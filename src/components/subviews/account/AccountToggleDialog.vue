@@ -10,8 +10,8 @@
 
       <DialogDescription class="mb-3">
         Bạn có chắc là muốn
-        <b>{{ KichHoat ? 'Vô hiệu hóa ' : 'Kích hoạt ' }}</b> tài khoản
-        <b>{{ TenDangNhap }}</b> không?
+        <b>{{ KichHoat ? 'Vô hiệu hóa ' : 'Kích hoạt ' }}</b> tài khoản <b>{{ TenDangNhap }}</b> của
+        người dùng <b>{{ HoTen }}</b> không?
       </DialogDescription>
       <DialogFooter class="w-full">
         <Button variant="outline" @click="closeDialog" class="w-full">Hủy</Button>
@@ -47,11 +47,22 @@ const dialogOpen = ref(false)
 const id = ref('')
 const KichHoat = ref(null)
 const TenDangNhap = ref('')
+const HoTen = ref('')
+
+const getFullName = (account) => {
+  if (account.DocGia) {
+    return `${account.DocGia.HoLot} ${account.DocGia.Ten}`
+  } else if (account.NhanVien) {
+    return account.NhanVien.HoTenNV
+  }
+  return 'N/A'
+}
 
 const openDialog = (account) => {
   id.value = account.MaTaiKhoan
   TenDangNhap.value = account.TenDangNhap
   KichHoat.value = account.KichHoat
+  HoTen.value = getFullName(account)
   dialogOpen.value = true
 }
 

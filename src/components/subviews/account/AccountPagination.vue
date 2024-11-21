@@ -100,7 +100,6 @@ const total_records = computed(() => {
 
 async function onPageChange(newPage) {
   accountStore.setPaginationParams(newPage, Number(limit.value))
-  await accountStore.fetchAccounts()
 }
 
 function getLimitLabel(limit) {
@@ -111,4 +110,18 @@ watch(limit, async (newLimit) => {
   accountStore.setPaginationParams(1, Number(newLimit))
   await accountStore.fetchAccounts()
 })
+
+watch(currentPage, async (newPage) => {
+  accountStore.setCurrentPage(newPage)
+  await accountStore.fetchAccounts()
+})
+
+watch(
+  () => accountStore.paginationParams.page,
+  (newPage) => {
+    if (currentPage.value !== newPage) {
+      currentPage.value = newPage
+    }
+  }
+)
 </script>

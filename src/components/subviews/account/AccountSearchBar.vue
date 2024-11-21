@@ -63,6 +63,12 @@ const fetchWithDebounce = debounce(async () => {
 watch(searchTerm, () => {
   fetchWithDebounce()
 })
+
+watch(field, (newField, oldField) => {
+  accountStore.setSearchParams(oldField)
+  searchTerm.value = ''
+  fetchWithDebounce()
+})
 </script>
 
 <template>

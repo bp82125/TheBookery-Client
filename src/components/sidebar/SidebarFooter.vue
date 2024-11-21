@@ -55,7 +55,7 @@ const handleUpdateInfo = () => {
 
         <DropdownMenuItem @select="handleResetPassword">
           <KeyRound class="mr-2 h-4 w-4" />
-          <span>Đặt lại mật khẩu</span>
+          <span>Đổi mật khẩu</span>
         </DropdownMenuItem>
         <DropdownMenuItem @select="handleSignOut">
           <LogOut class="mr-2 h-4 w-4" />

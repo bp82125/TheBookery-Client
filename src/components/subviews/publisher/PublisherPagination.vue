@@ -87,7 +87,7 @@ const publisherStore = usePublisherStore()
 const limitOptions = [5, 10, 20, 50, 100]
 const limit = ref(publisherStore.paginationParams.limit.toString())
 
-const currentPage = ref()
+const currentPage = ref(publisherStore.paginationParams.page)
 
 const total_pages = computed(() => {
   return publisherStore.pagination.total_pages * limit.value
@@ -99,7 +99,6 @@ const total_records = computed(() => {
 
 async function onPageChange(newPage) {
   publisherStore.setPaginationParams(newPage, Number(limit.value))
-  await publisherStore.fetchPublishers()
 }
 
 function getLimitLabel(limit) {
@@ -110,4 +109,18 @@ watch(limit, async (newLimit) => {
   publisherStore.setPaginationParams(1, Number(newLimit))
   await publisherStore.fetchPublishers()
 })
+
+watch(currentPage, async (newPage) => {
+  publisherStore.setCurrentPage(newPage)
+  await publisherStore.fetchPublishers()
+})
+
+watch(
+  () => publisherStore.paginationParams.page,
+  (newPage) => {
+    if (currentPage.value !== newPage) {
+      currentPage.value = newPage
+    }
+  }
+)
 </script>

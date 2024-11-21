@@ -93,6 +93,7 @@ export const useReaderStore = defineStore('reader', {
     setSearchParams(field, value) {
       if (value) {
         this.searchParams[field] = value
+        this.setCurrentPage(1)
       } else {
         delete this.searchParams[field]
       }
@@ -110,6 +111,9 @@ export const useReaderStore = defineStore('reader', {
     setPaginationParams(page, limit) {
       this.paginationParams.page = page
       this.paginationParams.limit = limit
+    },
+    setCurrentPage(page) {
+      this.paginationParams.page = page
     },
     resetStates() {
       this.$reset()

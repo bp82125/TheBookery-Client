@@ -1,14 +1,14 @@
 <template>
-  <Dialog v-model:open="dialogOpen">
+  <Dialog v-model:open="dialogOpen" @update:open="handleDialogOpenChange">
     <DialogTrigger as-child>
       <Button class="inline-flex items-center bg-blue-600 hover:bg-blue-500">
-        <Plus class="size-4 mr-2"></Plus> <span> Thêm độc giả </span>
+        <Plus class="size-4 mr-2"></Plus> <span> Thêm đọc giả </span>
       </Button>
     </DialogTrigger>
 
     <DialogContent class="max-w-xl">
       <DialogHeader>
-        <DialogTitle>Thêm độc giả mới</DialogTitle>
+        <DialogTitle>Thêm đọc giả mới</DialogTitle>
         <DialogDescription>
           Điền các thông tin cần thiết vào form bên dưới, sau đó ấn nút để tiến hành thêm
         </DialogDescription>
@@ -450,6 +450,10 @@ const closeDialog = () => {
 
 const openDialog = () => {
   dialogOpen.value = true
+}
+
+const handleDialogOpenChange = (open) => {
+  stepIndex.value = 1
 }
 
 defineExpose({ openDialog })

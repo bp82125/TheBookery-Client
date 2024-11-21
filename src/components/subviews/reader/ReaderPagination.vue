@@ -100,7 +100,6 @@ const total_records = computed(() => {
 
 async function onPageChange(newPage) {
   readerStore.setPaginationParams(newPage, Number(limit.value))
-  await readerStore.fetchReaders()
 }
 
 function getLimitLabel(limit) {
@@ -111,4 +110,18 @@ watch(limit, async (newLimit) => {
   readerStore.setPaginationParams(1, Number(newLimit))
   await readerStore.fetchReaders()
 })
+
+watch(currentPage, async (newPage) => {
+  readerStore.setCurrentPage(newPage)
+  await readerStore.fetchReaders()
+})
+
+watch(
+  () => readerStore.paginationParams.page,
+  (newPage) => {
+    if (currentPage.value !== newPage) {
+      currentPage.value = newPage
+    }
+  }
+)
 </script>

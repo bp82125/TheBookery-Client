@@ -129,4 +129,18 @@ watch(limit, async (newLimit) => {
   trackingBookStore.setPaginationParams(1, Number(newLimit))
   await trackingBookStore.fetchTrackingBooks()
 })
+
+watch(currentPage, async (newPage) => {
+  trackingBookStore.setCurrentPage(newPage)
+  await trackingBookStore.fetchTrackingBooks()
+})
+
+watch(
+  () => trackingBookStore.paginationParams.page,
+  (newPage) => {
+    if (currentPage.value !== newPage) {
+      currentPage.value = newPage
+    }
+  }
+)
 </script>

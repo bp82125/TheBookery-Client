@@ -78,20 +78,22 @@
         /></TableCell>
         <TableCell class="">{{ formatISODate(account.createdAt) }}</TableCell>
         <TableCell class="text-right max-w-fit">
-          <Button variant="outline" size="sm" class="mr-2" @click="resetPasswordAccount(account)">
-            <KeyRound class="size-4"></KeyRound>
-          </Button>
-          <Button size="sm" class="mr-2" @click="toggleAccount(account)">
-            <template v-if="account.KichHoat">
-              <LockKeyhole class="size-4"></LockKeyhole>
-            </template>
-            <template v-else>
-              <LockKeyholeOpen class="size-4"></LockKeyholeOpen>
-            </template>
-          </Button>
-          <Button variant="destructive" size="sm" @click="deleteAccount(account)">
-            <Trash class="size-4"></Trash
-          ></Button>
+          <template v-if="account.LoaiTaiKhoan !== 'ADMINISTRATOR'">
+            <Button variant="outline" size="sm" class="mr-2" @click="resetPasswordAccount(account)">
+              <KeyRound class="size-4"></KeyRound>
+            </Button>
+            <Button size="sm" class="mr-2" @click="toggleAccount(account)">
+              <template v-if="account.KichHoat">
+                <LockKeyhole class="size-4"></LockKeyhole>
+              </template>
+              <template v-else>
+                <LockKeyholeOpen class="size-4"></LockKeyholeOpen>
+              </template>
+            </Button>
+            <Button variant="destructive" size="sm" @click="deleteAccount(account)">
+              <Trash class="size-4"></Trash
+            ></Button>
+          </template>
         </TableCell>
       </TableRow>
     </TableBody>

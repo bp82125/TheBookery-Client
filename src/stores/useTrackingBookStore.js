@@ -159,6 +159,7 @@ export const useTrackingBookStore = defineStore('tracking', {
     setSearchParams(field, value) {
       if (value) {
         this.searchParams[field] = value
+        this.setCurrentPage(1)
       } else {
         delete this.searchParams[field]
       }
@@ -177,6 +178,9 @@ export const useTrackingBookStore = defineStore('tracking', {
     setPaginationParams(page, limit) {
       this.paginationParams.page = page
       this.paginationParams.limit = limit
+    },
+    setCurrentPage(page) {
+      this.paginationParams.page = page
     },
 
     getCurrentState() {

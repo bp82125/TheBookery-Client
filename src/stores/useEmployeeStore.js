@@ -95,6 +95,7 @@ export const useEmployeeStore = defineStore('employee', {
     setSearchParams(field, value) {
       if (value) {
         this.searchParams[field] = value
+        this.setCurrentPage(1)
       } else {
         delete this.searchParams[field]
       }
@@ -113,6 +114,9 @@ export const useEmployeeStore = defineStore('employee', {
     setPaginationParams(page, limit) {
       this.paginationParams.page = page
       this.paginationParams.limit = limit
+    },
+    setCurrentPage(page) {
+      this.paginationParams.page = page
     },
     resetStates() {
       this.$reset()

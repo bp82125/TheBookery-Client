@@ -100,7 +100,6 @@ const total_records = computed(() => {
 
 async function onPageChange(newPage) {
   employeeStore.setPaginationParams(newPage, Number(limit.value))
-  await employeeStore.fetchEmployees()
 }
 
 function getLimitLabel(limit) {
@@ -111,4 +110,18 @@ watch(limit, async (newLimit) => {
   employeeStore.setPaginationParams(1, Number(newLimit))
   await employeeStore.fetchEmployees()
 })
+
+watch(currentPage, async (newPage) => {
+  employeeStore.setCurrentPage(newPage)
+  await employeeStore.fetchEmployees()
+})
+
+watch(
+  () => employeeStore.paginationParams.page,
+  (newPage) => {
+    if (currentPage.value !== newPage) {
+      currentPage.value = newPage
+    }
+  }
+)
 </script>

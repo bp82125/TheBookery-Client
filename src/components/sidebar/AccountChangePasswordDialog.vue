@@ -2,7 +2,7 @@
   <Dialog v-model:open="dialogOpen">
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Thay đổi mật khẩu</DialogTitle>
+        <DialogTitle>Đổi mật khẩu</DialogTitle>
         <DialogDescription>
           Nhập mật khẩu cũ và mật khẩu mới vào các ô bên dưới, sau đó nhấn lưu để thay đổi mật khẩu.
         </DialogDescription>
