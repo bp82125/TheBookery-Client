@@ -1,5 +1,10 @@
 <template>
   <div class="px-4">
+    <template v-if="total_records <= 0">
+      <div class="flex justify-center my-8">
+        <span class="italic">Không tìm thấy nhà xuất bản nào</span>
+      </div>
+    </template>
     <div class="flex justify-end">
       <span
         >Trên tổng số <b>{{ total_records }}</b> nhà xuất bản</span

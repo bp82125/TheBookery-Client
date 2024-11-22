@@ -1,5 +1,10 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 mt-8">
+    <template v-if="total_records <= 0">
+      <div class="flex justify-center my-8">
+        <span class="italic">Không tìm thấy tài khoản nào</span>
+      </div>
+    </template>
     <div class="flex justify-end">
       <span
         >Trên tổng số <b>{{ total_records }}</b> tài khoản</span
@@ -88,7 +93,7 @@ const accountStore = useAccountStore()
 const limitOptions = [5, 10, 20, 50, 100]
 const limit = ref(accountStore.paginationParams.limit.toString())
 
-const currentPage = ref()
+const currentPage = ref(accountStore.paginationParams.page)
 
 const total_pages = computed(() => {
   return accountStore.pagination.total_pages * limit.value

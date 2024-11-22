@@ -29,9 +29,16 @@
     <CardFooter>
       <template v-if="LoaiTaiKhoan === 'USER'">
         <div class="w-full">
-          <Button class="w-full bg-blue-600 hover:bg-blue-700" @click="handleBookBorrowing(book)">
-            <Plus class="mr-2 h-4 w-4" />
-            Yêu cầu mượn sách
+          <Button
+            class="w-full bg-blue-600 hover:bg-blue-700"
+            :class="
+              book.SoQuyen !== 0 ? 'bg-blue-600 hover:bg-blue-700' : 'bg-red-600 hover:bg-red-700'
+            "
+            :disabled="book.SoQuyen === 0"
+            @click="handleBookBorrowing(book)"
+          >
+            <Plus v-if="book.SoQuyen !== 0" class="mr-2 h-4 w-4" />
+            {{ book.SoQuyen === 0 ? 'Đã hết sách' : 'Yêu cầu mượn sách' }}
           </Button>
         </div>
       </template>

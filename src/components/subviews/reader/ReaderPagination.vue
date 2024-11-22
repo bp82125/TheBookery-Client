@@ -88,7 +88,7 @@ const readerStore = useReaderStore()
 const limitOptions = [5, 10, 20, 50, 100]
 const limit = ref(readerStore.paginationParams.limit.toString())
 
-const currentPage = ref()
+const currentPage = ref(readerStore.paginationParams.page)
 
 const total_pages = computed(() => {
   return readerStore.pagination.total_pages * limit.value

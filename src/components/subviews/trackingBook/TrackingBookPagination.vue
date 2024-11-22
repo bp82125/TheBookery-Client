@@ -94,7 +94,7 @@ const trackingBookStore = useTrackingBookStore()
 const limitOptions = [5, 10, 20, 50, 100]
 const limit = ref(trackingBookStore.paginationParams.limit.toString())
 
-const currentPage = ref()
+const currentPage = ref(trackingBookStore.paginationParams.page)
 
 const total_pages = computed(() => {
   return trackingBookStore.pagination.total_pages * limit.value

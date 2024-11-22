@@ -1,5 +1,10 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 mt-8">
+    <template v-if="total_records <= 0">
+      <div class="flex justify-center my-8">
+        <span class="italic">Không tìm thấy nhân viên nào</span>
+      </div>
+    </template>
     <div class="flex justify-end">
       <span
         >Trên tổng số <b>{{ total_records }}</b> nhân viên</span
@@ -88,7 +93,7 @@ const employeeStore = useEmployeeStore()
 const limitOptions = [5, 10, 20, 50, 100]
 const limit = ref(employeeStore.paginationParams.limit.toString())
 
-const currentPage = ref()
+const currentPage = ref(employeeStore.paginationParams.page)
 
 const total_pages = computed(() => {
   return employeeStore.pagination.total_pages * limit.value

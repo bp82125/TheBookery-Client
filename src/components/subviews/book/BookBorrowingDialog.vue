@@ -16,7 +16,7 @@
       </DialogDescription>
       <DialogFooter class="w-full">
         <Button variant="outline" @click="closeDialog" class="w-full">Hủy</Button>
-        <Button @click="handleBorrowing" class="w-full">
+        <Button @click="handleBorrowing" class="w-full" :disabled="isSubmitting">
           {{ isSubmitting ? 'Đang xử lý...' : 'Thêm' }}</Button
         >
       </DialogFooter>
