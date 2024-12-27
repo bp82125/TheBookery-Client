@@ -4,6 +4,12 @@ The Bookery is an online platform designed to streamline library management and 
 
 Check out: [The Bookery (Server)](https://github.com/bp82125/TheBookery-Server)
 
+## Example Screenshots
+![](./example/1.jpeg)
+![](./example/2.jpeg)
+![](./example/3.jpeg)
+![](./example/5.jpeg)
+
 ## Tech Stack
 - **Framework**: Vue 3
 - **UI Library**: shadcn-vue
@@ -33,15 +39,29 @@ Check out: [The Bookery (Server)](https://github.com/bp82125/TheBookery-Server)
    # or
    yarn install
    ```
-3. Configure environment variables:
-Copy .env.example to .env:
-   ```bash
-   cp .env.example .env
-   ```
-Ensure the following variable is set in .env, and adjust it to match your base API endpoints:
-   ```env
-   VITE_BASE_API_ENDPOINTS=http://localhost:5000/api/v1
-   ```
+3. Create a Cloudinary bucket:
+   - Sign up or log in to [Cloudinary](https://cloudinary.com/).
+   - Navigate to your Cloudinary Dashboard.
+   - Note your **Cloud Name** from the dashboard.
+   - Create an **Upload Preset**:
+     1. Go to **Settings** > **Upload**.
+     2. Scroll to the **Upload Presets** section.
+     3. Click **Add upload preset**.
+     4. Configure the preset according to your needs (e.g., enable unsigned uploads if required).
+     5. Save the preset name for the `VITE_CLOUDINARY_UPLOAD_PRESET` variable.
+
+4. Configure environment variables:
+   - Copy `.env.example` to `.env`:
+     ```bash
+     cp .env.example .env
+     ```
+   - Ensure the following variables are set in `.env`, and adjust them to match your API endpoints and Cloudinary storage configuration:
+     ```env
+     VITE_API_BASE_URL=http://localhost:3000/api/v1
+
+     VITE_CLOUDINARY_CLOUD_NAME=cloud-name
+     VITE_CLOUDINARY_UPLOAD_PRESET=upload-preset
+     ```
 
 ### Development Server
 
