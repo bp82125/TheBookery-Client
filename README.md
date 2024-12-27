@@ -30,7 +30,7 @@ Check out: [The Bookery (Server)](https://github.com/bp82125/TheBookery-Server)
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/thebookery-client.git
+   git clone https://github.com/bp82125/thebookery-client.git
    cd thebookery-client
    ```
 2. Install dependencies:
