@@ -1,5 +1,7 @@
 # The Bookery (Client)
 
+> This project is the final assignment for the CT449 Web Application Development course.
+
 The Bookery is an online platform designed to streamline library management and improve the user experience for borrowing books. This repository contains the frontend codebase for the system.
 
 Check out: [The Bookery (Server)](https://github.com/bp82125/TheBookery-Server)
