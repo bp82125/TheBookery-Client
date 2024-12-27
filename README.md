@@ -79,13 +79,13 @@ yarn preview
 
 ### Other Scripts
 
-- **Format Code**:
+**Format Code**:
   ```bash
   npm run format
   # or
   yarn format
   ```
-- **Host Development Server on LAN**:
+**Host Development Server on LAN**:
   ```bash
   npm run host
   # or
