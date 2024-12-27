@@ -8,10 +8,10 @@ Check out: [The Bookery (Server)](https://github.com/bp82125/TheBookery-Server)
 - **Framework**: Vue 3
 - **UI Library**: shadcn-vue
 - **State Management**: Pinia
-- **Routing**: Vue Router
+- **Routing**: VueRouter
 - **Styling**: TailwindCSS with TailwindCSS Animate and Tailwind Merge
-- **Validation**: vee-validate with zod
-- **Utilities**: vue-cookies, axios, @vueuse/core, date-fns, clsx, and class-variance-authority
+- **Validation**: VeeValidate with Zod
+- **Utilities**: Axios, Vue-Cookies and VueUse
 
 ## Getting Started
 
