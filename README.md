@@ -1,35 +1,97 @@
-# LibraryManager-FE
+# The Bookery (Client)
 
-This template should help get you started developing with Vue 3 in Vite.
+The Bookery is an online platform designed to streamline library management and improve the user experience for borrowing books. This repository contains the frontend codebase for the system.
 
-## Recommended IDE Setup
+Check out: [The Bookery (Server)](https://github.com/bp82125/TheBookery-Server)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Tech Stack
+- **Framework**: Vue 3
+- **UI Library**: shadcn-vue
+- **State Management**: Pinia
+- **Routing**: VueRouter
+- **Styling**: TailwindCSS with TailwindCSS Animate and Tailwind Merge
+- **Validation**: VeeValidate with Zod
+- **Utilities**: Axios, Vue-Cookies and VueUse
 
-## Customize configuration
+## Getting Started
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+### Prerequisites
 
-## Project Setup
+- Node.js (v16 or later recommended)
+- npm or yarn package manager
 
-```sh
-npm install
-```
+### Installation
 
-### Compile and Hot-Reload for Development
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/thebookery-client.git
+   cd thebookery-client
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+3. Configure environment variables:
+Copy .env.example to .env:
+   ```bash
+   cp .env.example .env
+   ```
+Ensure the following variable is set in .env, and adjust it to match your base API endpoints:
+   ```env
+   VITE_BASE_API_ENDPOINTS=http://localhost:5000/api/v1
+   ```
 
-```sh
+### Development Server
+
+Start the development server with:
+
+```bash
 npm run dev
+# or
+yarn dev
 ```
 
-### Compile and Minify for Production
+The app will be available at `http://localhost:5173` by default.
 
-```sh
+### Build for Production
+
+To build the project for production:
+
+```bash
 npm run build
+# or
+yarn build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+The production build files will be in the `dist` folder.
 
-```sh
-npm run lint
+### Preview Production Build
+
+To preview the production build locally:
+
+```bash
+npm run preview
+# or
+yarn preview
 ```
+
+### Other Scripts
+
+**Format Code**:
+  ```bash
+  npm run format
+  # or
+  yarn format
+  ```
+**Host Development Server on LAN**:
+  ```bash
+  npm run host
+  # or
+  yarn host
+  ```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
