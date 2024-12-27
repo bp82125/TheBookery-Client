@@ -67,7 +67,7 @@ const getStatusLabel = (status) => {
     case 'APPROVED':
       return 'Đã duyệt'
     case 'REJECTED':
-      return 'Đã từ chối'
+      return 'Bị từ chối'
     case 'PICKED_UP':
       return 'Đã lấy sách'
     case 'RETURNED':

@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 import { useSignatureStore } from '@/stores/useSignatureStore'
 import axios from 'axios'
 
